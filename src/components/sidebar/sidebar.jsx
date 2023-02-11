@@ -1,26 +1,39 @@
 import { useState, useEffect, useRef } from 'react';
-import { NavLink, Link, useOutletContext, useParams } from 'react-router-dom';
+import { NavLink, Link, useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleMenuAC, toggleAccordionAC } from 'store';
+
 import { ChevronIcon } from 'assets/images/main-page';
 import { categories } from 'constants';
 import styles from './sidebar.module.css';
 
 export const Sidebar = () => {
   const setActive = ({ isActive }) => (isActive ? styles.itemActive : '');
-  const [isAccordion, setIsAccordion] = useState(true);
 
-  const [isBurger, closeSidebar] = useOutletContext();
+  const dispatch = useDispatch();
+  const isBurger = useSelector((state) => state.menu.isBurger);
+  const isAccordion = useSelector((state) => state.accordion.isAccordion);
 
   const { bookCategory } = useParams();
   const { bookId } = useParams();
 
   const menuRef = useRef();
 
+  const toggleMenu = () => {
+    dispatch(toggleMenuAC(!isBurger));
+  };
+
+  const toggleAccordion = (value) => {
+    dispatch(toggleAccordionAC(value));
+  };
+
   useEffect(() => {
     const handler = (e) => {
       if (!e.target.closest('#burgerButton') && isBurger) {
         if (!menuRef.current.contains(e.target)) {
-          closeSidebar();
+          toggleMenu();
         }
       }
     };
@@ -54,7 +67,7 @@ export const Sidebar = () => {
           <NavLink
             to={`/books/${bookCategory || 'all'}${bookId ? `/${bookId}` : ''}`}
             className={setActive}
-            onClick={() => setIsAccordion(!isAccordion)}
+            onClick={() => toggleAccordion(!isAccordion)}
             data-test-id='navigation-showcase'
           >
             <span className={styles.linkWrapper}>
@@ -72,7 +85,7 @@ export const Sidebar = () => {
                 data-path={path}
                 data-test-id='navigation-books'
               >
-                <Link key={name} to={`/books/${path}`} data-test-id='burger-books' onClick={() => closeSidebar()}>
+                <Link key={name} to={`/books/${path}`} data-test-id='burger-books' onClick={() => toggleMenu()}>
                   {name}
                   <span className={styles.quantity}>14</span>
                 </Link>
@@ -81,7 +94,7 @@ export const Sidebar = () => {
           </ul>
         </li>
         <li className={styles.item} data-test-id='navigation-terms'>
-          <NavLink to='/terms' className={setActive} onClick={() => setIsAccordion(false)} data-test-id='burger-terms'>
+          <NavLink to='/terms' className={setActive} onClick={() => toggleAccordion(false)} data-test-id='burger-terms'>
             Правила пользования
           </NavLink>
         </li>
@@ -89,7 +102,7 @@ export const Sidebar = () => {
           <NavLink
             to='/contract'
             className={setActive}
-            onClick={() => setIsAccordion(false)}
+            onClick={() => toggleAccordion(false)}
             data-test-id='burger-contract'
           >
             Договор оферты

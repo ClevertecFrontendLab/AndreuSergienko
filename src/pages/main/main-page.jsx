@@ -1,16 +1,35 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 
+import { toggleSearchAC, setCardsDisplayAC } from 'store';
+
 import { Card } from 'components';
 import { WindowIcon, ListIcon, CrossIcon, SearchIcon } from 'assets/images/main-page';
 import { BOOKS as books } from 'mocks';
+import { StrapiService } from 'services/strapi';
 import styles from './main-page.module.css';
 
 export const MainPage = () => {
-  const [display, setDisplay] = useState('groupByTile');
-  const [isFull, setIsFull] = useState(false);
+  const dispatch = useDispatch();
+  const isFull = useSelector((state) => state.search.isFull);
+  const display = useSelector((state) => state.cardsDisplay.display);
+
+  const [booksAPI, setBooks] = useState([]);
+
+  useEffect(() => {
+    StrapiService.getBooks().then((data) => setBooks(data));
+  });
+
+  const toggleIsFull = (value) => {
+    dispatch(toggleSearchAC(value));
+  };
+
+  const setCardsDisplay = (display) => {
+    dispatch(setCardsDisplayAC(display));
+  };
 
   const searchStyles = {
     searchWrapper: styles.searchWrapper,
@@ -42,7 +61,7 @@ export const MainPage = () => {
     ));
   };
 
-  const visibleItems = filterData(books, bookCategory);
+  const visibleItems = filterData(booksAPI, bookCategory);
 
   return (
     <section className={styles.content}>
@@ -53,7 +72,7 @@ export const MainPage = () => {
               type='button'
               className={styles.searchIcon}
               onClick={() => {
-                setIsFull(true);
+                toggleIsFull(true);
               }}
             >
               <SearchIcon />
@@ -69,7 +88,7 @@ export const MainPage = () => {
               className={styles.searchCross}
               data-test-id='button-search-close'
               onClick={() => {
-                setIsFull(false);
+                toggleIsFull(false);
               }}
             >
               <CrossIcon />
@@ -82,7 +101,7 @@ export const MainPage = () => {
 
         <div className={styles.displayButtons}>
           <button
-            onClick={() => setDisplay('groupByTile')}
+            onClick={() => setCardsDisplay('groupByTile')}
             type='button'
             className={
               display === 'groupByTile' ? `${styles.activeDisplayBtn} ${styles.displayBtn}` : styles.displayBtn
@@ -92,7 +111,7 @@ export const MainPage = () => {
             <WindowIcon />
           </button>
           <button
-            onClick={() => setDisplay('groupByList')}
+            onClick={() => setCardsDisplay('groupByList')}
             type='button'
             className={
               display === 'groupByList' ? `${styles.activeDisplayBtn} ${styles.displayBtn}` : styles.displayBtn
@@ -104,7 +123,13 @@ export const MainPage = () => {
         </div>
       </div>
 
-      <div className={`${styles.books} ${styles[display]}`}>{visibleItems}</div>
+      <div className={`${styles.books} ${styles[display]}`}>
+        {booksAPI?.map((book) => (
+          <Link key={book.id} to='/books/all' className={styles.bookLink} data-test-id='card'>
+            <Card key={book.id} book={book} groupBy={display} />
+          </Link>
+        ))}
+      </div>
     </section>
   );
 };

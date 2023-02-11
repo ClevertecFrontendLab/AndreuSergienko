@@ -1,9 +1,18 @@
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { toggleMenuAC } from 'store';
+
 import { logo, user } from 'assets/images/header';
 import styles from './header.module.css';
 
-export const Header = ({ useBurger }) => {
-  const [isBurger, toggleBurger] = useBurger;
+export const Header = () => {
+  const dispatch = useDispatch();
+  const isBurger = useSelector((state) => state.menu.isBurger);
+
+  const toggleMenu = () => {
+    dispatch(toggleMenuAC(!isBurger));
+  };
 
   return (
     <header className={styles.header}>
@@ -16,7 +25,7 @@ export const Header = ({ useBurger }) => {
             id='burgerButton'
             type='button'
             className={isBurger ? `${styles.burger} ${styles.burgerOpen}` : styles.burger}
-            onClick={toggleBurger}
+            onClick={toggleMenu}
             data-test-id='button-burger'
           >
             <span>&nbsp;</span>
