@@ -1,0 +1,49 @@
+.footer {
+  margin-top: auto;
+}
+
+.inners {
+  border-top: 1px solid #bfc4c9;
+  padding: 14px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.copyright {
+  margin: 0;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #363636;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  .inners {
+    flex-direction: column;
+    padding: 13px 8px;
+    text-align: center;
+  }
+
+  .copyright {
+    margin-bottom: 16px;
+    max-width: 200px;
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
