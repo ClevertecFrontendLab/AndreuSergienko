@@ -8,7 +8,6 @@ import { toggleMenuAC, toggleAccordionAC, getCategoriesAC } from 'store';
 import { StrapiService } from 'services/strapi';
 
 import { ChevronIcon } from 'assets/images/main-page';
-import { categories } from 'constants';
 import styles from './sidebar.module.css';
 
 export const Sidebar = () => {
