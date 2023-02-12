@@ -1,7 +1,7 @@
 import { ACTIONS } from 'constants';
 
 const initialState = {
-  isAccordion: false,
+  isAccordion: true,
 };
 
 export const accordionReducer = (state = initialState, action) => {
