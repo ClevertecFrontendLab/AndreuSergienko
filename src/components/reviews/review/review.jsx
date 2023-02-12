@@ -1,23 +1,25 @@
 import { Rating } from 'components/rating';
 
-import { user } from 'assets/images/book-page';
+import { userDefault } from 'assets/images/book-page';
 
 import styles from './review.module.css';
 
-export const Review = ({ review }) => (
+export const Review = ({ review: { user, id, rating, text, createdAt } }) => (
   <div className={styles.reviewer}>
     <div className={styles.user}>
-      <img src={user} alt='Пользователь' className={styles.avatar} />
+      <img src={user?.avatarUrl ?? userDefault} alt='Пользователь' className={styles.avatar} />
       <div className={styles.description}>
-        <span className={styles.nickname}>{review.userName}</span>
-        <span className={styles.createdDate}>{review.createdDate}</span>
+        <span className={styles.nickname}>
+          {user.firstName} {user.lastName}
+        </span>
+        <span className={styles.createdDate}>{createdAt}</span>
       </div>
     </div>
 
     <div className={styles.estimation}>
-      <Rating length={review.estimate} />
+      <Rating length={Math.round(rating)} />
     </div>
 
-    {!!review.comment && <p className={styles.comment}>{review.comment}</p>}
+    {!!text && <p className={styles.comment}>{text}</p>}
   </div>
 );
