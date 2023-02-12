@@ -1,1 +1,1 @@
-export { CATEGORIES as categories, ACTIONS } from './constants';
+export { ACTIONS } from './constants';

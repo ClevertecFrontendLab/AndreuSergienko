@@ -5,3 +5,4 @@ export * from './cards-display-reducer';
 export * from './comments-reducer';
 export * from './books-reducer';
 export * from './categories-reducer';
+export * from './current-book-reducer';

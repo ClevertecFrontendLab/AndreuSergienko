@@ -1,4 +1,4 @@
-import user from './user.jpg';
+import userDefault from './user.jpg';
 import { ChevronIconDark } from './icons';
 
-export { user, ChevronIconDark };
+export { userDefault, ChevronIconDark };
