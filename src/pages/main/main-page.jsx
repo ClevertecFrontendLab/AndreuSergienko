@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 
-import { toggleSearchAC, setCardsDisplayAC } from 'store';
+import { toggleSearchAC, setCardsDisplayAC, setBooksAC } from 'store';
 
 import { Card } from 'components';
 import { WindowIcon, ListIcon, CrossIcon, SearchIcon } from 'assets/images/main-page';
@@ -14,14 +14,15 @@ import styles from './main-page.module.css';
 
 export const MainPage = () => {
   const dispatch = useDispatch();
+
   const isFull = useSelector((state) => state.search.isFull);
   const display = useSelector((state) => state.cardsDisplay.display);
-
-  const [booksAPI, setBooks] = useState([]);
+  const books = useSelector((state) => state.books.booksData);
+  const categories = useSelector((state) => state.categories.categoriesList);
 
   useEffect(() => {
-    StrapiService.getBooks().then((data) => setBooks(data));
-  });
+    StrapiService.getBooks().then((data) => dispatch(setBooksAC(data)));
+  }, [dispatch]);
 
   const toggleIsFull = (value) => {
     dispatch(toggleSearchAC(value));
@@ -42,7 +43,7 @@ export const MainPage = () => {
 
   const { bookCategory } = useParams();
 
-  const filterData = (arr, category) => {
+  const filterData = (arr = [], category) => {
     if (category === 'all')
       return arr.map((book) => (
         <Link key={book.id} to={`/books/${book.category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
@@ -50,18 +51,20 @@ export const MainPage = () => {
         </Link>
       ));
 
-    const items = arr.filter((book) => book.category === category);
+    const currCategory = categories.find((item) => item.path === category);
+
+    const items = arr.filter((book) => book.categories.find((bookCategory) => bookCategory === currCategory.name));
 
     if (!items.length) return <h2>Книг по данной категории не найдено :(</h2>;
 
     return items.map((book) => (
-      <Link key={book.id} to={`/books/${book.category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
+      <Link key={book.id} to='/books/all' className={styles.bookLink} data-test-id='card'>
         <Card key={book.id} book={book} groupBy={display} />
       </Link>
     ));
   };
 
-  const visibleItems = filterData(booksAPI, bookCategory);
+  const visibleItems = filterData(books, bookCategory);
 
   return (
     <section className={styles.content}>
@@ -123,13 +126,7 @@ export const MainPage = () => {
         </div>
       </div>
 
-      <div className={`${styles.books} ${styles[display]}`}>
-        {booksAPI?.map((book) => (
-          <Link key={book.id} to='/books/all' className={styles.bookLink} data-test-id='card'>
-            <Card key={book.id} book={book} groupBy={display} />
-          </Link>
-        ))}
-      </div>
+      <div className={`${styles.books} ${styles[display]}`}>{visibleItems}</div>
     </section>
   );
 };
