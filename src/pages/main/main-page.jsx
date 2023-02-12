@@ -46,19 +46,19 @@ export const MainPage = () => {
   const filterData = (arr = [], category) => {
     if (category === 'all')
       return arr.map((book) => (
-        <Link key={book.id} to={`/books/${book.category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
+        <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
           <Card key={book.id} book={book} groupBy={display} />
         </Link>
       ));
 
-    const currCategory = categories.find((item) => item.path === category);
+    const currCategory = categories?.find((item) => item.path === category);
 
     const items = arr.filter((book) => book.categories.find((bookCategory) => bookCategory === currCategory.name));
 
     if (!items.length) return <h2>Книг по данной категории не найдено :(</h2>;
 
     return items.map((book) => (
-      <Link key={book.id} to='/books/all' className={styles.bookLink} data-test-id='card'>
+      <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
         <Card key={book.id} book={book} groupBy={display} />
       </Link>
     ));
