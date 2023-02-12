@@ -11,8 +11,6 @@ import { Review } from './review';
 import styles from './reviews.module.css';
 
 export const Reviews = ({ reviews }) => {
-  // const [isComments, setIsComments] = useState(true);
-
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.comments.isOpen);
 
@@ -42,19 +40,19 @@ export const Reviews = ({ reviews }) => {
         onClick={() => toggleComments()}
         data-test-id='button-hide-reviews'
         tabIndex={0}
-        className={cx('head', { hasReviews: reviews.length }, { open: isOpen })}
+        className={cx('head', { hasReviews: !!reviews?.length }, { open: isOpen })}
       >
         <div className={styles.subtitle}>Отзывы</div>
-        <div className={styles.count}>{reviews.length}</div>
-        <button type='button' className={cx('chevron', { hasReviews: reviews.length }, { open: isOpen })}>
+        <div className={styles.count}>{reviews?.length ?? 0}</div>
+        <button type='button' className={cx('chevron', { hasReviews: !!reviews?.length }, { open: isOpen })}>
           <ChevronIconDark />
         </button>
       </div>
 
-      {!!reviews.length && (
+      {!!reviews?.length && (
         <div className={cx('reviewers', { open: isOpen })}>
-          {reviews.map((review) => (
-            <Review key={review.userName} review={review} />
+          {reviews?.map((review) => (
+            <Review key={review.id} review={review} />
           ))}
         </div>
       )}
