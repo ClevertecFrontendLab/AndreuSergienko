@@ -9,6 +9,7 @@ import {
   commentsReducer,
   booksReducer,
   categoriesReducer,
+  currBookReducer,
 } from './reducers';
 
 const reducers = combineReducers({
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   comments: commentsReducer,
   books: booksReducer,
   categories: categoriesReducer,
+  currentBook: currBookReducer,
 });
 
 export const store = createStore(reducers, composeWithDevTools());
