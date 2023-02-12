@@ -1,12 +1,13 @@
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { categories } from 'constants';
 
 import styles from './bread-crumbs.module.css';
 
 export const BreadCrumbs = ({ title }) => {
   const { bookCategory } = useParams();
+  const categories = useSelector((state) => state.categories.categoriesList);
 
-  const extractedCategory = categories.find((item) => item.path === bookCategory)?.name;
+  const extractedCategory = categories?.find((item) => item.path === bookCategory)?.name;
 
   return (
     <div className={styles.breadCrumbs}>
