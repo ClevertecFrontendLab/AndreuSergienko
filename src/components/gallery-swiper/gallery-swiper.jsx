@@ -17,7 +17,7 @@ export const GallerySwiper = ({ currBook, setImage }) => (
     pagination={{ clickable: true }}
     spaceBetween={30}
     modules={[Pagination, Navigation, Scrollbar]}
-    className={currBook.images ? 'gallery-swiper' : 'gallery-swiper hidden'}
+    className={currBook?.images?.length > 2 ? 'gallery-swiper' : 'gallery-swiper hidden'}
     data-test-id='slide-big'
     breakpoints={{
       320: {
@@ -28,7 +28,7 @@ export const GallerySwiper = ({ currBook, setImage }) => (
       },
     }}
   >
-    {currBook.images?.length > 2 &&
+    {currBook?.images?.length > 2 &&
       currBook.images.map((img, i) => (
         <SwiperSlide data-test-id='slide-mini'>
           <button type='button' className='galleryImageButton' onClick={() => setImage(img)}>
