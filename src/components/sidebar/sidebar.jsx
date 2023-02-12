@@ -1,9 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { NavLink, Link, useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMenuAC, toggleAccordionAC } from 'store';
+import { toggleMenuAC, toggleAccordionAC, getCategoriesAC } from 'store';
+
+import { StrapiService } from 'services/strapi';
 
 import { ChevronIcon } from 'assets/images/main-page';
 import { categories } from 'constants';
@@ -15,6 +17,7 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
   const isBurger = useSelector((state) => state.menu.isBurger);
   const isAccordion = useSelector((state) => state.accordion.isAccordion);
+  const categoriesAPI = useSelector((state) => state.categories.categoriesList);
 
   const { bookCategory } = useParams();
   const { bookId } = useParams();
@@ -44,6 +47,10 @@ export const Sidebar = () => {
       document.removeEventListener('mousedown', handler);
     };
   });
+
+  useEffect(() => {
+    StrapiService.getCategories().then((data) => dispatch(getCategoriesAC(data)));
+  }, [dispatch]);
 
   const sidebarStyles = {
     aside: styles.aside,
@@ -78,11 +85,10 @@ export const Sidebar = () => {
             </span>
           </NavLink>
           <ul className={cx('sublist', { accordion: isAccordion })}>
-            {categories.map(({ name, path }) => (
+            {categoriesAPI?.map(({ name, path }) => (
               <li
                 key={name}
                 className={cx('subitem', { subitemActive: bookCategory === path })}
-                data-path={path}
                 data-test-id='navigation-books'
               >
                 <Link key={name} to={`/books/${path}`} data-test-id='burger-books' onClick={() => toggleMenu()}>
