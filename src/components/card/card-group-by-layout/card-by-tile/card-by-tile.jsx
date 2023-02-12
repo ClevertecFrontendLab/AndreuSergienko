@@ -15,7 +15,9 @@ export const CardByTile = ({ book }) => {
       </div>
       <div className={styles.description}>
         <h4 className={styles.title}>{title}</h4>
-        <p className={styles.author}>{authors.map((author) => author).join(authors.length < 2 ? '' : ',')}</p>
+        <p className={styles.author}>
+          {authors.map((author) => author).join(authors.length < 2 ? '' : ',')} {issueYear}
+        </p>
       </div>
       <button className={bookedTill || isBooked ? `${styles.order} ${styles.booked}` : styles.order} type='button'>
         {bookedTill ? `Занята до ${bookedTill}` : isBooked ? 'Забронирована' : 'Забронировать'}
