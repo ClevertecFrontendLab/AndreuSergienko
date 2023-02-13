@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { BOOKS as books } from 'mocks';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setBookAC } from 'store';
+import { setBookAC, setErrorAC, setLoadingAC } from 'store';
 
 import { StrapiService } from 'services/strapi';
 
 import { defaultBg } from 'assets/images/main-page';
 
-import { Rating, Reviews, BreadCrumbs, Sidebar, GallerySwiper } from 'components';
+import { Rating, Reviews, BreadCrumbs, Sidebar, GallerySwiper, ErrorTooltip } from 'components';
 
 import styles from './book-page.module.css';
 
@@ -20,14 +19,23 @@ export const BookPage = () => {
 
   const dispatch = useDispatch();
   const currBook = useSelector((state) => state.currentBook.book);
+  const isError = useSelector((state) => state.error.isError);
 
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    StrapiService.getBook(bookId).then((book) => dispatch(setBookAC(book)));
+    dispatch(setLoadingAC(true));
+    StrapiService.getBook(bookId)
+      .then((book) => dispatch(setBookAC(book)))
+      .catch(() => dispatch(setErrorAC(true)))
+      .finally(() => dispatch(setLoadingAC(false)));
   }, [bookId, dispatch]);
 
   const setImage = (img) => setActiveImage(img);
+
+  if (isError) {
+    return <ErrorTooltip />;
+  }
 
   return (
     <section className={styles.section}>
