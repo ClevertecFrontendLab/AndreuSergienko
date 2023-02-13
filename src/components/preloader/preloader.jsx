@@ -7,7 +7,7 @@ export const Preloader = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className='spinnerWrapper'>
+      <div className='spinnerWrapper' data-test-id='loader'>
         <div className='spinner'>{children}</div>
       </div>
     );

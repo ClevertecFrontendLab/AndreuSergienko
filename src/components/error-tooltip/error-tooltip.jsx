@@ -13,7 +13,7 @@ export const ErrorTooltip = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-test-id='error'>
       <span className={styles.errorIcon}>
         <ErrorIcon />
       </span>
