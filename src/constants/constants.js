@@ -7,4 +7,6 @@ export const ACTIONS = {
   setBooks: 'SET_BOOKS',
   getCategories: 'GET_CATEGORIES',
   setBook: 'SET_BOOK',
+  setLoading: 'SET_LOADING',
+  setError: 'SET_ERROR',
 };
