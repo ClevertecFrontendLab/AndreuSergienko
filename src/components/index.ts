@@ -8,3 +8,5 @@ export { Rating } from './rating';
 export { Reviews } from './reviews';
 export { BreadCrumbs } from './bread-crumbs';
 export { GallerySwiper } from './gallery-swiper';
+export { Preloader } from './preloader';
+export { ErrorTooltip } from './error-tooltip';
