@@ -6,3 +6,5 @@ export * from './comments-reducer';
 export * from './books-reducer';
 export * from './categories-reducer';
 export * from './current-book-reducer';
+export * from './preloader-reducer';
+export * from './error-reducer';
