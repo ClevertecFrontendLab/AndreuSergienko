@@ -1,6 +1,6 @@
 import { defaultBg } from 'assets/images/main-page/books';
 
-import { Rating } from 'components/rating';
+import { Rating } from 'components';
 
 import styles from './card-by-tile.module.css';
 
@@ -9,7 +9,9 @@ export const CardByTile = ({ book }) => {
 
   return (
     <div className={styles.book}>
-      <img className={styles.image} src={image} alt='book' />
+      <div className={styles.imageWrapper}>
+        <img className={styles.image} src={image} alt='book' />
+      </div>
       <div className={styles.rating}>
         <Rating length={rating ?? 0} />
       </div>

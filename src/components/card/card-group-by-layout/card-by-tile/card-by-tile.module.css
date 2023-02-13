@@ -15,11 +15,16 @@
    border-radius: 10px;
 }
 
-.image {
+.imageWrapper {
    border-radius: 10px;
-   max-height: 230px;
-   min-height: 230px;
    width: 100%;
+   overflow: hidden;
+}
+
+.image {
+   width: 100%;
+   min-height: 230px;
+   max-height: 230px;
 }
 
 .rating {
@@ -56,7 +61,7 @@
    display: -webkit-box;
    -webkit-line-clamp: 1;
    -webkit-box-orient: vertical;
-   
+
    margin-top: auto;
    text-transform: capitalize;
    font-weight: 400;
