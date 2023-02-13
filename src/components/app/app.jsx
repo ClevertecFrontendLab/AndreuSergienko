@@ -16,7 +16,6 @@ export const App = () => (
           <Route path='/terms' element={<TermsPage title='Правила Пользования' />} />
           <Route path='/contract' element={<TermsPage title='Договор Оферты' />} />
         </Route>
-
         <Route path='/books/:bookCategory/:bookId' element={<BookPage />} />
       </Route>
     </Routes>
