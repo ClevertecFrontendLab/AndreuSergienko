@@ -1,14 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 
-import { toggleSearchAC, setCardsDisplayAC, setBooksAC } from 'store';
+import { toggleSearchAC, setCardsDisplayAC, setBooksAC, setLoadingAC, setErrorAC } from 'store';
 
-import { Card } from 'components';
+import { Card, ErrorTooltip } from 'components';
 import { WindowIcon, ListIcon, CrossIcon, SearchIcon } from 'assets/images/main-page';
-import { BOOKS as books } from 'mocks';
 import { StrapiService } from 'services/strapi';
 import styles from './main-page.module.css';
 
@@ -19,10 +18,20 @@ export const MainPage = () => {
   const display = useSelector((state) => state.cardsDisplay.display);
   const books = useSelector((state) => state.books.booksData);
   const categories = useSelector((state) => state.categories.categoriesList);
+  const isError = useSelector((state) => state.error.isError);
 
   useEffect(() => {
-    StrapiService.getBooks().then((data) => dispatch(setBooksAC(data)));
+    StrapiService.getBooks()
+      .then((data) => dispatch(setBooksAC(data)))
+      .catch(() => dispatch(setErrorAC(true)))
+      .finally(() => dispatch(setLoadingAC(false)));
   }, [dispatch]);
+
+  useEffect(() => {
+    // if (books && categories) {
+    //   dispatch(setLoadingAC(false));
+    // }
+  }, [dispatch, books, categories]);
 
   const toggleIsFull = (value) => {
     dispatch(toggleSearchAC(value));
@@ -65,6 +74,10 @@ export const MainPage = () => {
   };
 
   const visibleItems = filterData(books, bookCategory);
+
+  if (isError) {
+    return <ErrorTooltip />;
+  }
 
   return (
     <section className={styles.content}>
