@@ -5,8 +5,12 @@
    width: 100%;
    left: 50%;
    transform: translateX(-50%);
-   height: 80px;
+   padding: 0 15px;
+}
+
+.inner {
    display: flex;
+   height: 80px;
    align-items: center;
    padding: 24px 32px;
    gap: 10px;
@@ -28,4 +32,42 @@
    margin-left: auto;
    border: none;
    background: transparent;
+}
+
+@media (max-width: 768px) {
+   .wrapper {
+      max-width: 640px;
+   }
+
+   .inner {
+      padding: 24px 16px;
+   }
+
+   .errorIcon svg,
+   .crossIcon svg {
+      width: 100%;
+      height: 100%;
+   }
+
+   .errorIcon {
+      flex: 0 0 24px;
+      height: 24px;
+   }
+
+   .message {
+      font-size: 14px;
+      line-height: 18px;
+   }
+
+   .crossIcon {
+      flex: 0 0 16px;
+      height: 16px;
+   }
+}
+
+@media (max-width: 576px) {
+   .inner {
+      height: auto;
+      align-items: flex-start;
+   }
 }
