@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react';
 import { NavLink, Link, useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
+import { ErrorTooltip } from 'components';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMenuAC, toggleAccordionAC, getCategoriesAC } from 'store';
+import { toggleMenuAC, toggleAccordionAC, getCategoriesAC, setErrorAC, setLoadingAC } from 'store';
 
 import { StrapiService } from 'services/strapi';
 
@@ -16,7 +18,8 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
   const isBurger = useSelector((state) => state.menu.isBurger);
   const isAccordion = useSelector((state) => state.accordion.isAccordion);
-  const categoriesAPI = useSelector((state) => state.categories.categoriesList);
+  const categories = useSelector((state) => state.categories.categoriesList);
+  const isError = useSelector((state) => state.error.isError);
 
   const { bookCategory } = useParams();
   const { bookId } = useParams();
@@ -48,7 +51,10 @@ export const Sidebar = () => {
   });
 
   useEffect(() => {
-    StrapiService.getCategories().then((data) => dispatch(getCategoriesAC(data)));
+    StrapiService.getCategories()
+      .then((data) => dispatch(getCategoriesAC(data)))
+      .catch(() => dispatch(setErrorAC(true)))
+      // .finally(() => dispatch(setLoadingAC(false)));
   }, [dispatch]);
 
   const sidebarStyles = {
@@ -65,6 +71,10 @@ export const Sidebar = () => {
   };
 
   const cx = classNames.bind(sidebarStyles);
+
+  if (isError) {
+    return <ErrorTooltip />;
+  }
 
   return (
     <aside ref={menuRef} className={cx('aside', { active: isBurger })} data-test-id='burger-navigation'>
@@ -84,7 +94,7 @@ export const Sidebar = () => {
             </span>
           </NavLink>
           <ul className={cx('sublist', { accordion: isAccordion })}>
-            {categoriesAPI?.map(({ name, path }) => (
+            {categories?.map(({ name, path }) => (
               <li
                 key={name}
                 className={cx('subitem', { subitemActive: bookCategory === path })}
