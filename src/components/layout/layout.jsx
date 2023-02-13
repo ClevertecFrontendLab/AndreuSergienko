@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import { Header, Footer } from 'components';
+
+import { Header, Footer, Preloader } from 'components';
 import styles from './layout.module.css';
 
 export const Layout = () => {
@@ -14,6 +15,7 @@ export const Layout = () => {
 
   return (
     <div className={styles.layout}>
+      <Preloader />
       <Header />
       <Outlet />
       <Footer />
