@@ -56,7 +56,7 @@ export const MainPage = () => {
 
   const filterData = (arr = [], category) => {
     if (category === 'all')
-      return arr.map((book) => (
+      return arr?.map((book) => (
         <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
           <Card key={book.id} book={book} groupBy={display} />
         </Link>
