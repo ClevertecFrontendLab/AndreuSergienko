@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import { ErrorTooltip } from 'components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMenuAC, toggleAccordionAC, getCategoriesAC, setErrorAC, setLoadingAC } from 'store';
+import { toggleMenuAC, toggleAccordionAC, setCategoriesAC, setErrorAC, setLoadingAC } from 'store';
 
 import { StrapiService } from 'services/strapi';
 
@@ -52,9 +52,9 @@ export const Sidebar = () => {
 
   useEffect(() => {
     StrapiService.getCategories()
-      .then((data) => dispatch(getCategoriesAC(data)))
-      .catch(() => dispatch(setErrorAC(true)))
-      // .finally(() => dispatch(setLoadingAC(false)));
+      .then((data) => dispatch(setCategoriesAC(data)))
+      .catch(() => dispatch(setErrorAC(true)));
+    // .finally(() => dispatch(setLoadingAC(false)));
   }, [dispatch]);
 
   const sidebarStyles = {
