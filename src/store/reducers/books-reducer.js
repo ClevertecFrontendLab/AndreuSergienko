@@ -1,7 +1,7 @@
 import { ACTIONS } from 'constants';
 
 const initialState = {
-  books: null,
+  booksData: null,
 };
 
 export const booksReducer = (state = initialState, action) => {
