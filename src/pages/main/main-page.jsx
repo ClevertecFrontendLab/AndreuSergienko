@@ -21,11 +21,13 @@ export const MainPage = () => {
   const isError = useSelector((state) => state.error.isError);
 
   useEffect(() => {
-    StrapiService.getBooks()
-      .then((data) => dispatch(setBooksAC(data)))
-      .catch(() => dispatch(setErrorAC(true)))
-      .finally(() => dispatch(setLoadingAC(false)));
-  }, [dispatch]);
+    if (!books && !categories) {
+      StrapiService.getBooks()
+        .then((data) => dispatch(setBooksAC(data)))
+        .catch(() => dispatch(setErrorAC(true)))
+        .finally(() => dispatch(setLoadingAC(false)));
+    }
+  }, [dispatch, books, categories]);
 
   useEffect(() => {
     // if (books && categories) {

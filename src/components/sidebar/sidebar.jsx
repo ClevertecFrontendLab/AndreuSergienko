@@ -51,11 +51,13 @@ export const Sidebar = () => {
   });
 
   useEffect(() => {
-    StrapiService.getCategories()
-      .then((data) => dispatch(setCategoriesAC(data)))
-      .catch(() => dispatch(setErrorAC(true)));
+    if (!categories) {
+      StrapiService.getCategories()
+        .then((data) => dispatch(setCategoriesAC(data)))
+        .catch(() => dispatch(setErrorAC(true)));
+    }
     // .finally(() => dispatch(setLoadingAC(false)));
-  }, [dispatch]);
+  }, [dispatch, categories]);
 
   const sidebarStyles = {
     aside: styles.aside,
