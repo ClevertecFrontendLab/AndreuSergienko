@@ -1,13 +1,13 @@
-import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 
-import { toggleSearchAC, setCardsDisplayAC, setBooksAC, setLoadingAC, setErrorAC } from 'store';
+import { setBooksAC, setCardsDisplayAC, setErrorAC, setLoadingAC, toggleSearchAC } from 'store';
 
+import { CrossIcon, ListIcon, SearchIcon, WindowIcon } from 'assets/images/main-page';
 import { Card, ErrorTooltip } from 'components';
-import { WindowIcon, ListIcon, CrossIcon, SearchIcon } from 'assets/images/main-page';
 import { StrapiService } from 'services/strapi';
 import styles from './main-page.module.css';
 
