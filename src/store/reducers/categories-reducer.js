@@ -6,11 +6,11 @@ const initialState = {
 
 export const categoriesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ACTIONS.getCategories:
+    case ACTIONS.setCategories:
       return { ...state, categoriesList: action.categoriesList };
     default:
       return state;
   }
 };
 
-export const getCategoriesAC = (categoriesList) => ({ type: ACTIONS.getCategories, categoriesList });
+export const setCategoriesAC = (categoriesList) => ({ type: ACTIONS.setCategories, categoriesList });

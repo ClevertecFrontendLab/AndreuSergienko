@@ -5,7 +5,7 @@ export const ACTIONS = {
   toggleComments: 'TOGGLE_COMMENTS',
   setCardsDisplay: 'SET_CARDS_DISPLAY',
   setBooks: 'SET_BOOKS',
-  getCategories: 'GET_CATEGORIES',
+  setCategories: 'SET_CATEGORIES',
   setBook: 'SET_BOOK',
   setLoading: 'SET_LOADING',
   setError: 'SET_ERROR',
