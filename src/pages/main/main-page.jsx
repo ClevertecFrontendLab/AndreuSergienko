@@ -29,12 +29,6 @@ export const MainPage = () => {
     }
   }, [dispatch, books, categories]);
 
-  useEffect(() => {
-    // if (books && categories) {
-    //   dispatch(setLoadingAC(false));
-    // }
-  }, [dispatch, books, categories]);
-
   const toggleIsFull = (value) => {
     dispatch(toggleSearchAC(value));
   };

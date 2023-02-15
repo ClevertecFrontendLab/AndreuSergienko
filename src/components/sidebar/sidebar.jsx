@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
-import { NavLink, Link, useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
+import { useEffect, useRef } from 'react';
+import { Link, NavLink, useParams } from 'react-router-dom';
 
 import { ErrorTooltip } from 'components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMenuAC, toggleAccordionAC, setCategoriesAC, setErrorAC, setLoadingAC } from 'store';
+import { setCategoriesAC, setErrorAC, toggleAccordionAC, toggleMenuAC } from 'store';
 
 import { StrapiService } from 'services/strapi';
 
@@ -56,7 +56,6 @@ export const Sidebar = () => {
         .then((data) => dispatch(setCategoriesAC(data)))
         .catch(() => dispatch(setErrorAC(true)));
     }
-    // .finally(() => dispatch(setLoadingAC(false)));
   }, [dispatch, categories]);
 
   const sidebarStyles = {

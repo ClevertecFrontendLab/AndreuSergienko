@@ -25,8 +25,4 @@
    border: 10px solid orangered;
    border-top-color: transparent;
    animation: spinner 1s infinite linear;
-
-   /* border: 10px dotted transparent;
-   border-image: linear-gradient(231.58deg, #F83600 -53.35%, #F9D423 297.76%);
-   border-image-slice: 34;*/
 }
