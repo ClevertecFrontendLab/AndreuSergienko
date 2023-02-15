@@ -1,4 +1,4 @@
-import { Pagination, Navigation, Scrollbar } from 'swiper';
+import { Navigation, Pagination, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -29,10 +29,10 @@ export const GallerySwiper = ({ currBook, setImage }) => (
     }}
   >
     {currBook?.images?.length > 2 &&
-      currBook.images.map((img, i) => (
+      currBook.images.map((img) => (
         <SwiperSlide data-test-id='slide-mini'>
-          <button type='button' className='galleryImageButton' onClick={() => setImage(img)}>
-            <img className='galleryImg' src={img} alt='Обложка' />
+          <button type='button' className='galleryImageButton' onClick={() => setImage(img.url)}>
+            <img className='galleryImg' src={img.url} alt='Обложка' />
           </button>
         </SwiperSlide>
       ))}
