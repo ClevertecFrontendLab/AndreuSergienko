@@ -1,0 +1,71 @@
+@font-face {
+   font-family: 'Montserrat';
+   src: url('assets/fonts/Montserrat/static/Montserrat-Regular.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 400;
+}
+
+@font-face {
+   font-family: 'Montserrat';
+   src: url('assets/fonts/Montserrat/static/Montserrat-Medium.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 500;
+}
+
+@font-face {
+   font-family: 'Montserrat';
+   src: url('assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 600;
+}
+
+@font-face {
+   font-family: 'Montserrat';
+   src: url('assets/fonts/Montserrat/static/Montserrat-Bold.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 700;
+}
+
+@font-face {
+   font-family: 'Poppins';
+   src: url('assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 500;
+}
+
+@font-face {
+   font-family: 'Poppins';
+   src: url('assets/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 600;
+}
+
+@font-face {
+   font-family: 'Poppins';
+   src: url('assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 700;
+}
+
+@font-face {
+   font-family: 'SF Pro Text';
+   src: url('assets/fonts/SFPro/TrueType/SFProText-Regular.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 400;
+}
+
+@font-face {
+   font-family: 'Symbol';
+   src: url('assets/fonts/Symbol/SymbolRegular.ttf') format('truetype');
+   font-style: normal;
+   font-display: swap;
+   font-weight: 400;
+}

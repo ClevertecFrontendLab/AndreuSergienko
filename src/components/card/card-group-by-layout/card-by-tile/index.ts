@@ -1,0 +1,1 @@
+export { CardByTile } from './card-by-tile'

@@ -1,0 +1,73 @@
+.reviewer {
+  max-width: 730px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #727272;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.description {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.createdDate {}
+
+.estimation {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.comment {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #363636;
+}
+
+@media (max-width: 576px) {
+
+  .user,
+  .estimation {
+    margin-bottom: 8px;
+  }
+
+  .comment {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+
+  .description {
+    gap: 0;
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  .nickname,
+  .createdDate {
+    flex: 1 1 100%;
+  }
+}

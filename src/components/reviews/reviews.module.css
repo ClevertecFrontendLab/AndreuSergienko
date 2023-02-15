@@ -1,0 +1,107 @@
+.reviews {
+  margin-top: 61px;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0.1px;
+  color: #363636;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.head.hasReviews {
+  cursor: pointer;
+}
+
+.head.hasReviews.open {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ebebeb;
+  max-width: 350px;
+  margin-bottom: 16px;
+}
+
+.chevronIcon {
+  border: none;
+  margin-left: 20px;
+  background: none;
+  display: none;
+  transition: .2s;
+  cursor: pointer;
+  transform: rotate(180deg);
+}
+
+.chevronIcon.hasReviews {
+  display: inline-block;
+}
+
+.chevronIcon.open {
+  transform: rotate(0);
+  transition: .2s;
+}
+
+.hasReviews {}
+
+.count {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: #a7a7a7;
+}
+
+.reviewers {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.reviewers.open {
+  max-height: none;
+  overflow: visible;
+}
+
+.rateBtn {
+  margin-top: 39px;
+  max-width: 350px;
+  padding: 14px 0;
+  width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(233.73deg, #f83600 -16.08%, #f9d423 327.37%);
+  border: none;
+  outline: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+@media (max-width:768px) {
+  .rateBtn {
+    max-width: none;
+  }
+}
+
+@media (max-width:576px) {
+  .reviews {
+    margin-top: 42px;
+  }
+
+  .rateBtn {
+    padding: 11px 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}

@@ -1,0 +1,9 @@
+.layout {
+   padding-top: 55px;
+   padding-bottom: 61px;
+}
+
+.layoutInner {
+   display: flex;
+   gap: 6px;
+}
