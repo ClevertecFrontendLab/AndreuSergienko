@@ -21,13 +21,13 @@ export const MainPage = () => {
   const isError = useSelector((state) => state.error.isError);
 
   useEffect(() => {
-    if (!books && !categories) {
+    if (!books) {
       StrapiService.getBooks()
         .then((data) => dispatch(setBooksAC(data)))
         .catch(() => dispatch(setErrorAC(true)))
         .finally(() => dispatch(setLoadingAC(false)));
     }
-  }, [dispatch, books, categories]);
+  }, [dispatch, books]);
 
   const toggleIsFull = (value) => {
     dispatch(toggleSearchAC(value));
