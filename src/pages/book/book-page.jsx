@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setBookAC, setErrorAC, setLoadingAC } from 'store';
 
 import { StrapiService } from 'services/strapi';
 
-import { defaultBg } from 'assets/images/main-page';
-
-import { Rating, Reviews, BreadCrumbs, Sidebar, GallerySwiper, ErrorTooltip } from 'components';
+import { BreadCrumbs, ErrorTooltip, GallerySwiper, Rating, Reviews, Sidebar } from 'components';
 
 import styles from './book-page.module.css';
 
