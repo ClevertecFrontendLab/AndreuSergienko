@@ -52,7 +52,5 @@ export class Strapi {
     }));
   };
 
-  getImage(imageUrl) {
-    return `${this.apiBase}${imageUrl}`;
-  }
+  getImage = (imageUrl) => `${this.apiBase}${imageUrl}`;
 }
