@@ -8,5 +8,7 @@ export const ACTIONS = {
   setCategories: 'SET_CATEGORIES',
   setBook: 'SET_BOOK',
   setLoading: 'SET_LOADING',
-  setError: 'SET_ERROR',
+  setCategoriesError: 'SET_CATEGORIES_ERROR',
+  setBooksError: 'SET_BOOKS_ERROR',
+  setCurrBookError: 'SET_CURR_BOOK_ERROR',
 };
