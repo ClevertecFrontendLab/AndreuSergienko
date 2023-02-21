@@ -4,11 +4,12 @@ import { Link, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 
-import { setBooksAC, setCardsDisplayAC, setErrorAC, setLoadingAC, toggleSearchAC } from 'store';
+import { setCardsDisplayAC, toggleSearchAC } from 'store';
+
+import { fetchBooks, fetchCategories } from 'store/async-actions';
 
 import { CrossIcon, ListIcon, SearchIcon, WindowIcon } from 'assets/images/main-page';
 import { Card, ErrorTooltip } from 'components';
-import { StrapiService } from 'services/strapi';
 import styles from './main-page.module.css';
 
 export const MainPage = () => {
@@ -18,16 +19,14 @@ export const MainPage = () => {
   const display = useSelector((state) => state.cardsDisplay.display);
   const books = useSelector((state) => state.books.booksData);
   const categories = useSelector((state) => state.categories.categoriesList);
-  const isError = useSelector((state) => state.error.isError);
+  const isBooksError = useSelector((state) => state.error.booksError);
 
   useEffect(() => {
-    if (!books) {
-      StrapiService.getBooks()
-        .then((data) => dispatch(setBooksAC(data)))
-        .catch(() => dispatch(setErrorAC(true)))
-        .finally(() => dispatch(setLoadingAC(false)));
+    if (!books && !categories) {
+      dispatch(fetchBooks());
+      dispatch(fetchCategories());
     }
-  }, [dispatch, books]);
+  }, [dispatch, books, categories]);
 
   const toggleIsFull = (value) => {
     dispatch(toggleSearchAC(value));
@@ -58,9 +57,9 @@ export const MainPage = () => {
 
     const currCategory = categories?.find((item) => item.path === category);
 
-    const items = arr.filter((book) => book.categories.find((bookCategory) => bookCategory === currCategory.name));
+    const items = arr?.filter((book) => book.categories?.find((bookCategory) => bookCategory === currCategory?.name));
 
-    if (!items.length) return <h2>Книг по данной категории не найдено :(</h2>;
+    if (!items?.length) return <h2 className={styles.noBooksFound}>В этой категории еще нет книг</h2>;
 
     return items.map((book) => (
       <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
@@ -69,10 +68,17 @@ export const MainPage = () => {
     ));
   };
 
+  const searchFilterData = (arr = [], value) => {
+    return arr?.filter((book) => book.title.includes(value));
+  };
+
   const visibleItems = filterData(books, bookCategory);
 
-  if (isError) {
+  if (isBooksError) {
     return <ErrorTooltip />;
+  }
+  if (!books?.length) {
+    return null;
   }
 
   return (
