@@ -68,9 +68,7 @@ export const MainPage = () => {
     ));
   };
 
-  const searchFilterData = (arr = [], value) => {
-    return arr?.filter((book) => book.title.includes(value));
-  };
+  const searchFilterData = (arr = [], value) => arr?.filter((book) => book.title.includes(value));
 
   const visibleItems = filterData(books, bookCategory);
 
