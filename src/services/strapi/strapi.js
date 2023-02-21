@@ -3,9 +3,10 @@ export class Strapi {
 
   async getBooks() {
     const response = await fetch(`${this.apiBase}/api/books`);
+
     const data = await response.json();
 
-    return Promise.resolve(data.map(this.transformCard));
+    return data.map(this.transformCard);
   }
 
   async getBook(id) {
@@ -17,9 +18,10 @@ export class Strapi {
 
   getCategories = async () => {
     const response = await fetch(`${this.apiBase}/api/categories`);
+
     const data = await response.json();
 
-    return Promise.resolve([{ name: 'Все книги', path: 'all' }, ...data]);
+    return [{ name: 'Все книги', path: 'all' }, ...data];
   };
 
   transformCard = (book) => ({
