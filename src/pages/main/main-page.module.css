@@ -25,6 +25,18 @@
   outline: none;
 }
 
+.noBooksFound {
+  min-height: 500px;
+  width: 100%;
+  margin-top: 200px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.1px;
+  color: #A7A7A7;
+}
+
 .searchWrapper {
   display: flex;
   align-items: center;
@@ -118,6 +130,7 @@
 
 .books {
   margin-top: 32px;
+  height: 100%;
 }
 
 .groupByTile {
@@ -143,6 +156,12 @@
 
   .groupByTile {
     gap: 32px 35px;
+  }
+
+  .noBooksFound {
+    margin-top: 170px;
+    font-size: 32px;
+    line-height: 40px;
   }
 }
 
@@ -226,6 +245,13 @@
 
   .searchWrapper.full .searchCross {
     display: inline-block;
+  }
+
+  .noBooksFound {
+    min-height: 130px;
+    margin-top: 90px;
+    font-size: 18px;
+    line-height: 28px;
   }
 
   .order {
