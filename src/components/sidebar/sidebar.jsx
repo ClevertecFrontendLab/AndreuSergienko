@@ -5,7 +5,7 @@ import { Link, NavLink, useParams } from 'react-router-dom';
 import { ErrorTooltip } from 'components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleAccordionAC, toggleMenuAC } from 'store';
+import { fetchCategories, toggleAccordionAC, toggleMenuAC } from 'store';
 
 import { ChevronIcon } from 'assets/images/main-page';
 import styles from './sidebar.module.css';
@@ -48,6 +48,12 @@ export const Sidebar = () => {
       document.removeEventListener('mousedown', handler);
     };
   });
+
+  useEffect(() => {
+    if (!categories) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, categories]);
 
   const countBooksQuantity = (books, categories) =>
     categories
