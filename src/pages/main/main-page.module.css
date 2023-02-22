@@ -83,9 +83,12 @@
 }
 
 .filter {
-  padding-left: 23px;
+  padding-left: 16px;
+  padding-right: 16px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
   flex: 0 0 150px;
-  background: url('../../assets/images/main-page/icons/sort.svg') no-repeat 16px center;
   color: #A7A7A7;
   cursor: pointer;
 }
@@ -206,7 +209,8 @@
 
   .filter {
     flex-basis: 32px;
-    background-position: center;
+    justify-content: center;
+    padding: 8px;
   }
 
   .filter span {
