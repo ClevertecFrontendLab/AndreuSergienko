@@ -3,7 +3,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import {
-  accordionReducer, booksReducer, cardsDisplayReducer, categoriesReducer, commentsReducer, currBookReducer, errorReducer, menuReducer, preloaderReducer, searchReducer
+  accordionReducer,
+  booksReducer,
+  cardsDisplayReducer,
+  categoriesReducer,
+  commentsReducer,
+  currBookReducer,
+  errorReducer,
+  menuReducer,
+  preloaderReducer,
+  searchReducer,
+  sortReducer
 } from './reducers';
 
 const reducers = combineReducers({
@@ -17,6 +27,7 @@ const reducers = combineReducers({
   currentBook: currBookReducer,
   preloader: preloaderReducer,
   error: errorReducer,
+  sort: sortReducer,
 });
 
 export const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
