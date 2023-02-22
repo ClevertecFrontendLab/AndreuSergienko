@@ -20,6 +20,7 @@ export const fetchCategories = () => async (dispatch) => {
 };
 
 export const fetchBooks = () => async (dispatch) => {
+  dispatch(setLoadingAC(true));
   try {
     const response = await StrapiService.getBooks();
     dispatch(setBooksAC(response));
