@@ -4,11 +4,12 @@ import { Link, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 
-import { setCardsDisplayAC, toggleSearchAC } from 'store';
+import { setCardsDisplayAC, setTermAC, toggleSearchAC, toggleSortRuleAC } from 'store';
 
-import { fetchBooks, fetchCategories } from 'store/async-actions';
+import { fetchBooks } from 'store/async-actions';
 
 import { CrossIcon, ListIcon, SearchIcon, WindowIcon } from 'assets/images/main-page';
+import { SortIcon } from 'assets/images/main-page/icons';
 import { Card, ErrorTooltip } from 'components';
 import styles from './main-page.module.css';
 
@@ -18,15 +19,23 @@ export const MainPage = () => {
   const isFull = useSelector((state) => state.search.isFull);
   const display = useSelector((state) => state.cardsDisplay.display);
   const books = useSelector((state) => state.books.booksData);
+
   const categories = useSelector((state) => state.categories.categoriesList);
   const isBooksError = useSelector((state) => state.error.booksError);
+  const term = useSelector((state) => state.search.term);
+  const sortRule = useSelector((state) => state.sort.sortRule);
+
+  const { bookCategory } = useParams();
 
   useEffect(() => {
-    if (!books && !categories) {
+    let ignore = false;
+    if (!ignore) {
       dispatch(fetchBooks());
-      dispatch(fetchCategories());
     }
-  }, [dispatch, books, categories]);
+    return () => {
+      ignore = true;
+    };
+  }, [dispatch]);
 
   const toggleIsFull = (value) => {
     dispatch(toggleSearchAC(value));
@@ -42,18 +51,22 @@ export const MainPage = () => {
     input: styles.input,
     full: styles.full,
   };
+  const handleChange = (e) => {
+    dispatch(setTermAC(e.target.value));
+  };
 
   const cx = classNames.bind(searchStyles);
 
-  const { bookCategory } = useParams();
+  const toggleSortRule = () => {
+    if (sortRule === 'high-to-low') {
+      dispatch(toggleSortRuleAC('low-to-high'));
+    } else {
+      dispatch(toggleSortRuleAC('high-to-low'));
+    }
+  };
 
   const filterData = (arr = [], category) => {
-    if (category === 'all')
-      return arr?.map((book) => (
-        <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
-          <Card key={book.id} book={book} groupBy={display} />
-        </Link>
-      ));
+    if (category === 'all') return arr;
 
     const currCategory = categories?.find((item) => item.path === category);
 
@@ -61,16 +74,32 @@ export const MainPage = () => {
 
     if (!items?.length) return <h2 className={styles.noBooksFound}>В этой категории еще нет книг</h2>;
 
-    return items.map((book) => (
-      <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
+    return items;
+  };
+
+  const searchFilterData = (arr = [], term) => {
+    if (!term.length) return arr;
+    return arr?.filter((book) => book.title.toLowerCase().includes(term.toLowerCase()));
+  };
+
+  const sortData = (arr = [], sortRule) => {
+    if (!arr?.length) return [];
+
+    if (sortRule === 'low-to-high') return arr?.sort((a, b) => a.rating - b.rating);
+
+    return arr?.sort((a, b) => b.rating - a.rating);
+  };
+
+  const renderItems = (arr) =>
+    arr?.map((book) => (
+      <Link key={book.id} to={`/books/${bookCategory}/${book.id}`} className={styles.bookLink} data-test-id='card'>
         <Card key={book.id} book={book} groupBy={display} />
       </Link>
     ));
-  };
 
-  const searchFilterData = (arr = [], value) => arr?.filter((book) => book.title.includes(value));
+  const filteredData = filterData(searchFilterData(books, term), bookCategory);
 
-  const visibleItems = filterData(books, bookCategory);
+  const visibleItems = renderItems(sortData(filteredData, sortRule));
 
   if (isBooksError) {
     return <ErrorTooltip />;
@@ -95,6 +124,8 @@ export const MainPage = () => {
             </button>
             <input
               className={cx('search')}
+              onChange={handleChange}
+              value={term}
               type='search'
               placeholder='Поиск книги или автора…'
               data-test-id='input-search'
@@ -110,7 +141,8 @@ export const MainPage = () => {
               <CrossIcon />
             </button>
           </div>
-          <button className={`${styles.filter} ${styles.input}`} type='button'>
+          <button className={`${styles.filter} ${styles.input}`} type='button' onClick={toggleSortRule}>
+            <SortIcon />
             <span>По рейтингу</span>
           </button>
         </div>
