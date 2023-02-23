@@ -93,6 +93,16 @@
   cursor: pointer;
 }
 
+.sortIcon {
+  width: 16px;
+  height: 16px;
+  transform: rotate(0);
+}
+
+.sortLowToHigh {
+  transform: rotate(180deg);
+}
+
 .displayButtons {
   flex-basis: max-content;
   display: flex;
@@ -213,7 +223,7 @@
     padding: 8px;
   }
 
-  .filter span {
+  .filter .sortRule {
     display: none;
   }
 

@@ -146,8 +146,10 @@ export const MainPage = () => {
             </button>
           </div>
           <button className={`${styles.filter} ${styles.input}`} type='button' onClick={toggleSortRule}>
-            <SortIcon />
-            <span>По рейтингу</span>
+            <span className={`${styles.sortIcon} ${sortRule === 'low-to-high' ? styles.sortLowToHigh : ''}`}>
+              <SortIcon />
+            </span>
+            <span className={styles.sortRule}>По рейтингу</span>
           </button>
         </div>
 
