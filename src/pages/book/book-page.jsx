@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchBook } from 'store';
 
-
 import { BreadCrumbs, ErrorTooltip, GallerySwiper, Rating, Reviews, Sidebar } from 'components';
 
 import styles from './book-page.module.css';
@@ -56,7 +55,9 @@ export const BookPage = () => {
                 </div>
               </div>
               <div className={styles.shortDesc}>
-                <h2 className={styles.title}>{currBook?.title}</h2>
+                <h2 className={styles.title} data-test-id='book-title'>
+                  {currBook?.title}
+                </h2>
                 <p className={styles.author}>
                   {currBook?.authors.map((author) => `${author}, `)} {currBook?.issueYear}
                 </p>

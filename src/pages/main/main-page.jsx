@@ -76,10 +76,20 @@ export const MainPage = () => {
   };
 
   const searchFilterData = (arr, term) => {
-    if (!term.length && !arr?.length) return <h2 className={styles.noBooksFound}>В этой категории еще нет книг</h2>;
+    if (!term.length && !arr?.length)
+      return (
+        <h2 className={styles.noBooksFound} data-test-id='empty-category'>
+          В этой категории еще нет книг
+        </h2>
+      );
 
     const items = arr?.filter((book) => book.title.toLowerCase().includes(term.toLowerCase()));
-    if (!items?.length) return <h2 className={styles.noBooksFound}>По запросу ничего не найдено</h2>;
+    if (!items?.length)
+      return (
+        <h2 className={styles.noBooksFound} data-test-id='search-result-not-found'>
+          По запросу ничего не найдено
+        </h2>
+      );
 
     return items;
   };
@@ -145,7 +155,12 @@ export const MainPage = () => {
               <CrossIcon />
             </button>
           </div>
-          <button className={`${styles.filter} ${styles.input}`} type='button' onClick={toggleSortRule}>
+          <button
+            className={`${styles.filter} ${styles.input}`}
+            type='button'
+            onClick={toggleSortRule}
+            data-test-id='sort-rating-button'
+          >
             <span className={`${styles.sortIcon} ${sortRule === 'low-to-high' ? styles.sortLowToHigh : ''}`}>
               <SortIcon />
             </span>

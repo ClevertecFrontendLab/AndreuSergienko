@@ -17,7 +17,7 @@ export const CardByList = ({ book, term }) => {
 
     return parts.map((part) =>
       regex.test(part) ? (
-        <mark key={uuidv4()} style={{ color: '#FF5253', background: 'none' }}>
+        <mark key={uuidv4()} style={{ color: '#FF5253', background: 'none' }} data-test-id='highlight-matches'>
           {part}
         </mark>
       ) : (

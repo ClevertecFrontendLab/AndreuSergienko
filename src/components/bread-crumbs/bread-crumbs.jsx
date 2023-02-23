@@ -13,10 +13,11 @@ export const BreadCrumbs = ({ title }) => {
     <div className={styles.breadCrumbs}>
       <div className='app-container'>
         <div className={styles.inner}>
-          <Link to={`/books/${bookCategory}`}>
+          <Link to={`/books/${bookCategory}`} data-test-id='breadcrumbs-link'>
             <span className={styles.category}>{extractedCategory ?? 'Все книги'}</span>
           </Link>{' '}
-          <span className={styles.divider}>/</span> {title}
+          <span className={styles.divider}>/</span>
+          <span data-test-id='book-name'>{title}</span>
         </div>
       </div>
     </div>

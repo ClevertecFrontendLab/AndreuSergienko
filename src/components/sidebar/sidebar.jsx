@@ -57,7 +57,7 @@ export const Sidebar = () => {
 
   const countBooksQuantity = (books, categories) =>
     categories
-      ?.map((category, cIndex) => {
+      ?.map((category) => {
         const filtered = books?.filter((book) => book.categories.find((bc) => bc === category.name));
         return filtered?.length;
       })
@@ -150,12 +150,28 @@ export const Sidebar = () => {
                 <li
                   key={name}
                   className={cx('subitem', { subitemActive: bookCategory === path })}
-                  data-test-id='navigation-books'
+                  data-test-id={`navigation-${path === 'all' ? 'books' : path}`}
                 >
-                  <Link key={name} to={`/books/${path}`} data-test-id='burger-books' onClick={() => toggleMenu()}>
+                  <Link
+                    key={name}
+                    to={`/books/${path}`}
+                    data-test-id={`burger-${path === 'all' ? 'books' : path}`}
+                    onClick={() => toggleMenu()}
+                  >
                     {name}
-                    <span className={styles.quantity}>{booksQuantity[index]}</span>
                   </Link>
+                  <span
+                    className={`${styles.quantity} ${styles.desktopQuantity}`}
+                    data-test-id={`navigation-book-count-for-${path === 'all' ? 'books' : path}`}
+                  >
+                    {booksQuantity[index]}
+                  </span>
+                  <span
+                    className={`${styles.quantity} ${styles.mobileQuantity}`}
+                    data-test-id={`burger-book-count-for-${path === 'all' ? 'books' : path}`}
+                  >
+                    {booksQuantity[index]}
+                  </span>
                 </li>
               ))}
             </ul>
