@@ -17,7 +17,7 @@ export const CardByTile = ({ book, term }) => {
 
     return parts.map((part) =>
       regex.test(part) ? (
-        <mark key={uuidv4()} style={{ color: '#FF5253', background: 'none' }}>
+        <mark key={uuidv4()} style={{ color: '#FF5253', background: 'none' }} data-test-id='highlight-matches'>
           {part}
         </mark>
       ) : (
@@ -34,7 +34,7 @@ export const CardByTile = ({ book, term }) => {
         <img className={styles.image} src={image ?? defaultBg} alt={title} />
       </div>
       <div className={styles.rating}>
-        <Rating length={rating ?? 0} />
+        <Rating length={Math.round(rating)} />
       </div>
       <div className={styles.description}>
         <h4 className={styles.title}>{matchedTitle}</h4>

@@ -145,7 +145,8 @@
   color: #A7A7A7;
 }
 
-.mobileQuantity {
+.mobileQuantity,
+.mobileLink {
   display: none;
 }
 
@@ -178,12 +179,14 @@
     padding: 32px;
   }
 
-  .desktopQuantity {
+  .desktopQuantity,
+  .desktopLink {
     display: none;
   }
 
-  .mobileQuantity {
-    display: inline;
+  .mobileQuantity,
+  .mobileLink {
+    display: initial;
   }
 }
 

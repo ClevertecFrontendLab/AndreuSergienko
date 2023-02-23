@@ -26,7 +26,6 @@ export class Strapi {
 
   transformCard = (book) => ({
     ...book,
-    rating: Math.round(book.rating),
     image: book.image?.url ? this.getImage(book.image.url) : null,
   });
 

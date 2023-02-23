@@ -147,16 +147,13 @@ export const Sidebar = () => {
           {categories?.length ? (
             <ul className={cx('sublist', { accordion: isAccordion })}>
               {categories.map(({ name, path }, index) => (
-                <li
-                  key={name}
-                  className={cx('subitem', { subitemActive: bookCategory === path })}
-                  data-test-id={`navigation-${path === 'all' ? 'books' : path}`}
-                >
+                <li key={name} className={cx('subitem', { subitemActive: bookCategory === path })}>
                   <Link
                     key={name}
                     to={`/books/${path}`}
-                    data-test-id={`burger-${path === 'all' ? 'books' : path}`}
+                    data-test-id={`navigation-${path === 'all' ? 'books' : path}`}
                     onClick={() => toggleMenu()}
+                    className={styles.desktopLink}
                   >
                     {name}
                   </Link>
@@ -166,6 +163,15 @@ export const Sidebar = () => {
                   >
                     {booksQuantity[index]}
                   </span>
+                  <Link
+                    key={name}
+                    to={`/books/${path}`}
+                    data-test-id={`burger-${path === 'all' ? 'books' : path}`}
+                    onClick={() => toggleMenu()}
+                    className={styles.mobileLink}
+                  >
+                    {name}
+                  </Link>
                   <span
                     className={`${styles.quantity} ${styles.mobileQuantity}`}
                     data-test-id={`burger-book-count-for-${path === 'all' ? 'books' : path}`}

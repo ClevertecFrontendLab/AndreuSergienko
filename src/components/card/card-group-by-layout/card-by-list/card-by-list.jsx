@@ -44,7 +44,7 @@ export const CardByList = ({ book, term }) => {
 
         <div className={styles.bottom}>
           <div className={styles.rating}>
-            <Rating length={rating} />
+            <Rating length={Math.round(rating)} />
           </div>
           <button className={booking?.order ? `${styles.order} ${styles.booked}` : styles.order} type='button'>
             {booking?.order ? 'Забронирована' : 'Забронировать'}

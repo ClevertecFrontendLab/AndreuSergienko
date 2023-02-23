@@ -79,7 +79,7 @@ export const MainPage = () => {
     if (!term.length && !arr?.length)
       return (
         <h2 className={styles.noBooksFound} data-test-id='empty-category'>
-          В этой категории еще нет книг
+          В этой категории книг ещё нет
         </h2>
       );
 
