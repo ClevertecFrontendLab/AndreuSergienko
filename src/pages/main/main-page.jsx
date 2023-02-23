@@ -72,32 +72,36 @@ export const MainPage = () => {
 
     const items = arr?.filter((book) => book.categories?.find((bookCategory) => bookCategory === currCategory?.name));
 
-    if (!items?.length) return <h2 className={styles.noBooksFound}>В этой категории еще нет книг</h2>;
+    return items;
+  };
+
+  const searchFilterData = (arr, term) => {
+    if (!term.length && !arr?.length) return <h2 className={styles.noBooksFound}>В этой категории еще нет книг</h2>;
+
+    const items = arr?.filter((book) => book.title.toLowerCase().includes(term.toLowerCase()));
+    if (!items?.length) return <h2 className={styles.noBooksFound}>По запросу ничего не найдено</h2>;
 
     return items;
   };
 
-  const searchFilterData = (arr = [], term) => {
-    if (!term.length) return arr;
-    return arr?.filter((book) => book.title.toLowerCase().includes(term.toLowerCase()));
-  };
-
-  const sortData = (arr = [], sortRule) => {
-    if (!arr?.length) return [];
-
+  const sortData = (arr, sortRule) => {
+    if (!Array.isArray(arr)) return arr;
     if (sortRule === 'low-to-high') return arr?.sort((a, b) => a.rating - b.rating);
 
     return arr?.sort((a, b) => b.rating - a.rating);
   };
 
-  const renderItems = (arr) =>
-    arr?.map((book) => (
+  const renderItems = (arr) => {
+    if (!Array.isArray(arr)) return arr;
+
+    return arr?.map((book) => (
       <Link key={book.id} to={`/books/${bookCategory}/${book.id}`} className={styles.bookLink} data-test-id='card'>
         <Card key={book.id} book={book} groupBy={display} />
       </Link>
     ));
+  };
 
-  const filteredData = filterData(searchFilterData(books, term), bookCategory);
+  const filteredData = searchFilterData(filterData(books, bookCategory), term);
 
   const visibleItems = renderItems(sortData(filteredData, sortRule));
 
