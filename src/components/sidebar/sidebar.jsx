@@ -164,7 +164,7 @@ export const Sidebar = () => {
                     {booksQuantity[index]}
                   </span>
                   <Link
-                    key={name}
+                    key={path}
                     to={`/books/${path}`}
                     data-test-id={`burger-${path === 'all' ? 'books' : path}`}
                     onClick={() => toggleMenu()}
