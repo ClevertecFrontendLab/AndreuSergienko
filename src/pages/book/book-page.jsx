@@ -3,9 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setBookAC, setErrorAC, setLoadingAC } from 'store';
-
-import { StrapiService } from 'services/strapi';
+import { fetchBook } from 'store';
 
 import { BreadCrumbs, ErrorTooltip, GallerySwiper, Rating, Reviews, Sidebar } from 'components';
 
@@ -13,25 +11,28 @@ import styles from './book-page.module.css';
 
 export const BookPage = () => {
   const { bookId } = useParams();
-  const { bookCategory } = useParams();
 
   const dispatch = useDispatch();
   const currBook = useSelector((state) => state.currentBook.book);
-  const isError = useSelector((state) => state.error.isError);
+  const isBookError = useSelector((state) => state.error.currBookError);
 
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    dispatch(setLoadingAC(true));
-    StrapiService.getBook(bookId)
-      .then((book) => dispatch(setBookAC(book)))
-      .catch(() => dispatch(setErrorAC(true)))
-      .finally(() => dispatch(setLoadingAC(false)));
+    let ignore = false;
+
+    if (!ignore) {
+      dispatch(fetchBook(bookId));
+    }
+
+    return () => {
+      ignore = true;
+    };
   }, [bookId, dispatch]);
 
   const setImage = (img) => setActiveImage(img);
 
-  if (isError) {
+  if (isBookError) {
     return <ErrorTooltip />;
   }
 
@@ -40,7 +41,7 @@ export const BookPage = () => {
       <div className={styles.sidebar}>
         <Sidebar />
       </div>
-      <BreadCrumbs title={currBook?.title} category={bookCategory} />
+      <BreadCrumbs title={currBook?.title} />
       <div className={styles.details}>
         <div className='app-container'>
           <div className={styles.detailsInner}>
@@ -54,7 +55,9 @@ export const BookPage = () => {
                 </div>
               </div>
               <div className={styles.shortDesc}>
-                <h2 className={styles.title}>{currBook?.title}</h2>
+                <h2 className={styles.title} data-test-id='book-title'>
+                  {currBook?.title}
+                </h2>
                 <p className={styles.author}>
                   {currBook?.authors.map((author) => `${author}, `)} {currBook?.issueYear}
                 </p>

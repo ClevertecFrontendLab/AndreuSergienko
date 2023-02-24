@@ -3,6 +3,10 @@
    padding: 20px 0;
 }
 
+.category:hover {
+   text-decoration: underline;
+}
+
 .inner {
    line-height: 24px;
 }

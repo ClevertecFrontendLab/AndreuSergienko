@@ -13,4 +13,4 @@ export const currBookReducer = (state = initialState, action) => {
   }
 };
 
-export const setBookAC = (book) => ({ type: ACTIONS.setBook, book });
+export const setCurrBookAC = (book) => ({ type: ACTIONS.setBook, book });

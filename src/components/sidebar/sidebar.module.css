@@ -145,6 +145,11 @@
   color: #A7A7A7;
 }
 
+.mobileQuantity,
+.mobileLink {
+  display: none;
+}
+
 @media (max-width: 950px) {
   .aside {
     position: absolute;
@@ -172,6 +177,16 @@
   .list,
   .userControls {
     padding: 32px;
+  }
+
+  .desktopQuantity,
+  .desktopLink {
+    display: none;
+  }
+
+  .mobileQuantity,
+  .mobileLink {
+    display: initial;
   }
 }
 

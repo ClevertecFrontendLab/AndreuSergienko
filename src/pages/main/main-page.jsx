@@ -4,11 +4,13 @@ import { Link, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 
-import { setBooksAC, setCardsDisplayAC, setErrorAC, setLoadingAC, toggleSearchAC } from 'store';
+import { setCardsDisplayAC, setTermAC, toggleSearchAC, toggleSortRuleAC } from 'store';
+
+import { fetchBooks } from 'store/async-actions';
 
 import { CrossIcon, ListIcon, SearchIcon, WindowIcon } from 'assets/images/main-page';
+import { SortIcon } from 'assets/images/main-page/icons';
 import { Card, ErrorTooltip } from 'components';
-import { StrapiService } from 'services/strapi';
 import styles from './main-page.module.css';
 
 export const MainPage = () => {
@@ -17,17 +19,23 @@ export const MainPage = () => {
   const isFull = useSelector((state) => state.search.isFull);
   const display = useSelector((state) => state.cardsDisplay.display);
   const books = useSelector((state) => state.books.booksData);
+
   const categories = useSelector((state) => state.categories.categoriesList);
-  const isError = useSelector((state) => state.error.isError);
+  const isBooksError = useSelector((state) => state.error.booksError);
+  const term = useSelector((state) => state.search.term);
+  const sortRule = useSelector((state) => state.sort.sortRule);
+
+  const { bookCategory } = useParams();
 
   useEffect(() => {
-    if (!books) {
-      StrapiService.getBooks()
-        .then((data) => dispatch(setBooksAC(data)))
-        .catch(() => dispatch(setErrorAC(true)))
-        .finally(() => dispatch(setLoadingAC(false)));
+    let ignore = false;
+    if (!ignore) {
+      dispatch(fetchBooks());
     }
-  }, [dispatch, books]);
+    return () => {
+      ignore = true;
+    };
+  }, [dispatch]);
 
   const toggleIsFull = (value) => {
     dispatch(toggleSearchAC(value));
@@ -43,36 +51,75 @@ export const MainPage = () => {
     input: styles.input,
     full: styles.full,
   };
+  const handleChange = (e) => {
+    dispatch(setTermAC(e.target.value));
+  };
 
   const cx = classNames.bind(searchStyles);
 
-  const { bookCategory } = useParams();
+  const toggleSortRule = () => {
+    if (sortRule === 'high-to-low') {
+      dispatch(toggleSortRuleAC('low-to-high'));
+    } else {
+      dispatch(toggleSortRuleAC('high-to-low'));
+    }
+  };
 
   const filterData = (arr = [], category) => {
-    if (category === 'all')
-      return arr?.map((book) => (
-        <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
-          <Card key={book.id} book={book} groupBy={display} />
-        </Link>
-      ));
+    if (category === 'all') return arr;
 
     const currCategory = categories?.find((item) => item.path === category);
 
-    const items = arr.filter((book) => book.categories.find((bookCategory) => bookCategory === currCategory.name));
+    const items = arr?.filter((book) => book.categories?.find((bookCategory) => bookCategory === currCategory?.name));
 
-    if (!items.length) return <h2>Книг по данной категории не найдено :(</h2>;
+    return items;
+  };
 
-    return items.map((book) => (
-      <Link key={book.id} to={`/books/${category}/${book.id}`} className={styles.bookLink} data-test-id='card'>
+  const searchFilterData = (arr, term) => {
+    if (!term.length && !arr?.length)
+      return (
+        <h2 className={styles.noBooksFound} data-test-id='empty-category'>
+          В этой категории книг ещё нет
+        </h2>
+      );
+
+    const items = arr?.filter((book) => book.title.toLowerCase().includes(term.toLowerCase()));
+    if (!items?.length)
+      return (
+        <h2 className={styles.noBooksFound} data-test-id='search-result-not-found'>
+          По запросу ничего не найдено
+        </h2>
+      );
+
+    return items;
+  };
+
+  const sortData = (arr, sortRule) => {
+    if (!Array.isArray(arr)) return arr;
+    if (sortRule === 'low-to-high') return arr?.sort((a, b) => a.rating - b.rating);
+
+    return arr?.sort((a, b) => b.rating - a.rating);
+  };
+
+  const renderItems = (arr) => {
+    if (!Array.isArray(arr)) return arr;
+
+    return arr?.map((book) => (
+      <Link key={book.id} to={`/books/${bookCategory}/${book.id}`} className={styles.bookLink} data-test-id='card'>
         <Card key={book.id} book={book} groupBy={display} />
       </Link>
     ));
   };
 
-  const visibleItems = filterData(books, bookCategory);
+  const filteredData = searchFilterData(filterData(books, bookCategory), term);
 
-  if (isError) {
+  const visibleItems = renderItems(sortData(filteredData, sortRule));
+
+  if (isBooksError) {
     return <ErrorTooltip />;
+  }
+  if (!books?.length) {
+    return null;
   }
 
   return (
@@ -91,6 +138,8 @@ export const MainPage = () => {
             </button>
             <input
               className={cx('search')}
+              onChange={handleChange}
+              value={term}
               type='search'
               placeholder='Поиск книги или автора…'
               data-test-id='input-search'
@@ -106,8 +155,16 @@ export const MainPage = () => {
               <CrossIcon />
             </button>
           </div>
-          <button className={`${styles.filter} ${styles.input}`} type='button'>
-            <span>По рейтингу</span>
+          <button
+            className={`${styles.filter} ${styles.input}`}
+            type='button'
+            onClick={toggleSortRule}
+            data-test-id='sort-rating-button'
+          >
+            <span className={`${styles.sortIcon} ${sortRule === 'low-to-high' ? styles.sortLowToHigh : ''}`}>
+              <SortIcon />
+            </span>
+            <span className={styles.sortRule}>По рейтингу</span>
           </button>
         </div>
 

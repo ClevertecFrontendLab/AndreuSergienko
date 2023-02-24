@@ -3,9 +3,10 @@ export class Strapi {
 
   async getBooks() {
     const response = await fetch(`${this.apiBase}/api/books`);
+
     const data = await response.json();
 
-    return Promise.resolve(data.map(this.transformCard));
+    return data.map(this.transformCard);
   }
 
   async getBook(id) {
@@ -15,17 +16,17 @@ export class Strapi {
     return Promise.resolve(this.transformCurrBook(book));
   }
 
-  getCategories = async () => {
+  async getCategories() {
     const response = await fetch(`${this.apiBase}/api/categories`);
+
     const data = await response.json();
 
-    return Promise.resolve([{ name: 'Все книги', path: 'all' }, ...data]);
-  };
+    return [{ name: 'Все книги', path: 'all' }, ...data];
+  }
 
   transformCard = (book) => ({
     ...book,
-    rating: Math.round(book.rating),
-    image: this.getImage(book.image?.url),
+    image: book.image?.url ? this.getImage(book.image.url) : null,
   });
 
   transformCurrBook = (book) => ({

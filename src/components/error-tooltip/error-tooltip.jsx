@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { setErrorAC } from 'store';
+import { setBooksErrorAC, setCategoriesErrorAC, setCurrBookErrorAC } from 'store';
 
-import { ErrorIcon, CrossIcon } from 'assets/images/error';
+import { CrossIcon, ErrorIcon } from 'assets/images/error';
 
 import styles from './error-tooltip.module.css';
 
@@ -9,7 +9,9 @@ export const ErrorTooltip = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(setErrorAC(false));
+    dispatch(setBooksErrorAC(false));
+    dispatch(setCategoriesErrorAC(false));
+    dispatch(setCurrBookErrorAC(false));
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import styles from './bread-crumbs.module.css';
 
@@ -13,7 +13,11 @@ export const BreadCrumbs = ({ title }) => {
     <div className={styles.breadCrumbs}>
       <div className='app-container'>
         <div className={styles.inner}>
-          <span>{extractedCategory ?? 'Все книги'}</span> <span className={styles.divider}>/</span> {title}
+          <Link to={`/books/${bookCategory}`} data-test-id='breadcrumbs-link'>
+            <span className={styles.category}>{extractedCategory ?? 'Все книги'}</span>
+          </Link>{' '}
+          <span className={styles.divider}>/</span>
+          <span data-test-id='book-name'>{title}</span>
         </div>
       </div>
     </div>

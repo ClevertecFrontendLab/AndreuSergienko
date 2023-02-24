@@ -1,17 +1,19 @@
-import { createStore, combineReducers } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 import {
-  menuReducer,
   accordionReducer,
-  searchReducer,
-  cardsDisplayReducer,
-  commentsReducer,
   booksReducer,
+  cardsDisplayReducer,
   categoriesReducer,
+  commentsReducer,
   currBookReducer,
-  preloaderReducer,
   errorReducer,
+  menuReducer,
+  preloaderReducer,
+  searchReducer,
+  sortReducer
 } from './reducers';
 
 const reducers = combineReducers({
@@ -25,6 +27,7 @@ const reducers = combineReducers({
   currentBook: currBookReducer,
   preloader: preloaderReducer,
   error: errorReducer,
+  sort: sortReducer,
 });
 
-export const store = createStore(reducers, composeWithDevTools());
+export const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
