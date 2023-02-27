@@ -14,3 +14,78 @@ export const ACTIONS = {
   setBooksError: 'SET_BOOKS_ERROR',
   setCurrBookError: 'SET_CURR_BOOK_ERROR',
 };
+
+export const FORM_FIELDS = {
+  signUp: {
+    fields: [
+      {
+        inputs: [
+          {
+            type: 'text',
+            placeholder: 'Придумайте логин для входа',
+            tip: 'Используйте для логина латинский алфавит и цифры',
+          },
+          {
+            type: 'password',
+            placeholder: 'Пароль',
+            tip: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+          },
+        ],
+        buttonContent: 'следующий шаг',
+      },
+      {
+        inputs: [
+          {
+            type: 'text',
+            placeholder: 'Имя',
+          },
+          {
+            type: 'text',
+            placeholder: 'Фамилия',
+          },
+        ],
+        buttonContent: 'последний шаг',
+      },
+      {
+        inputs: [
+          {
+            type: 'tel',
+            placeholder: 'Номер телефона',
+          },
+          {
+            type: 'text',
+            placeholder: 'E-mail',
+          },
+        ],
+        buttonContent: 'зарегистрироваться',
+      },
+    ],
+    link: {
+      content: 'войти',
+      path: '/signIn',
+    },
+    title: 'Регистрация',
+  },
+  signIn: {
+    fields: [
+      {
+        inputs: [
+          {
+            type: 'text',
+            placeholder: 'Логин',
+          },
+          {
+            type: 'password',
+            placeholder: 'Пароль',
+          },
+        ],
+        buttonContent: 'вход',
+      },
+    ],
+    link: {
+      content: 'регистрация',
+      path: '/signUp',
+    },
+    title: 'Вход в личный кабинет',
+  },
+};
