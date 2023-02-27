@@ -36,6 +36,7 @@ export const Header = () => {
           <div className={styles.profile}>
             <span className={styles.greet}>Привет, Иван!</span>
             <img src={user} alt='user-avatar' />
+            <Link to='/signUp'>Sign Up</Link>
           </div>
         </div>
       </div>
