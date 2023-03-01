@@ -65,8 +65,9 @@ export const SIGN_UP_FORM = {
         },
         {
           name: 'email',
-          type: 'text',
+          type: 'email',
           placeholder: 'E-mail',
+          errorTip: 'Введите корректный email',
         },
       ],
       button: {
