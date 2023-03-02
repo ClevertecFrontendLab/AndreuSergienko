@@ -1,27 +1,35 @@
-/* eslint-disable jsx-a11y/no-autofocus */
-/* eslint-disable react/button-has-type */
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import styles from '../sign-up-form.module.css';
 
 export const SignUpFormSecond = ({ changeStep }) => {
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
 
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
   const handleClick = () => {
-    changeStep();
+    if (!isDisabled && firstName && lastName) {
+      changeStep();
+    } else {
+      setIsDisabled(true);
+    }
   };
 
+  useMemo(() => {
+    if (firstName && lastName) {
+      setIsDisabled(false);
+    }
+  }, [firstName, lastName]);
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form}>
       <h4 className={styles.formTitle}>Регистрация</h4>
       <div className={styles.steps}>
         <span>2</span> шаг из <span>3</span>
@@ -31,19 +39,25 @@ export const SignUpFormSecond = ({ changeStep }) => {
           <input
             {...register('firstName', {
               required: true,
+              onBlur: (e) => setFirstName(e.target.value),
             })}
             name='firstName'
             className={styles.input}
             type='text'
             placeholder='Имя'
           />
-          {errors?.firstName && <span className={styles.inputTip}>Поле не должно быть пустым</span>}
+          {errors?.firstName && (
+            <span style={{ color: '#f42c4f' }} className={styles.inputTip}>
+              Поле не должно быть пустым
+            </span>
+          )}
         </div>
 
         <div className={styles.field}>
           <input
             {...register('lastName', {
               required: true,
+              onBlur: (e) => setLastName(e.target.value),
             })}
             name='lastName'
             className={styles.input}
@@ -51,11 +65,15 @@ export const SignUpFormSecond = ({ changeStep }) => {
             placeholder='Фамилия'
           />
 
-          {errors?.lastName && <span className={styles.inputTip}>Поле не должно быть пустым</span>}
+          {errors?.lastName && (
+            <span style={{ color: '#f42c4f' }} className={styles.inputTip}>
+              Поле не должно быть пустым
+            </span>
+          )}
         </div>
       </div>
 
-      <button type='button' className={styles.nextStepBtn} onClick={handleClick}>
+      <button type='button' disabled={isDisabled} className={styles.nextStepBtn} onClick={handleClick}>
         последний шаг
       </button>
 
