@@ -9,4 +9,5 @@ export * from './menu-reducer';
 export * from './preloader-reducer';
 export * from './search-reducer';
 export * from './sort-reducer';
-
+export * from './form-reducer';
+export * from './registration-reducer';

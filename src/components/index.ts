@@ -10,4 +10,4 @@ export { BreadCrumbs } from './bread-crumbs';
 export { GallerySwiper } from './gallery-swiper';
 export { Preloader } from './preloader';
 export { ErrorTooltip } from './error-tooltip';
-export { SignUpForm, SignInForm } from './auth-forms';
+export { SignUpForm, SignInForm, FeedbackModal } from './auth-forms';
