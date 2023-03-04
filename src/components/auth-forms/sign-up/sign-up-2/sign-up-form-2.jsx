@@ -1,25 +1,35 @@
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
 
 export const SignUpFormSecond = ({ changeStep }) => {
+  const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors },
+    handleSubmit,
   } = useForm({ mode: 'onBlur' });
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  const handleClick = () => {
+  const checkIsFieldsValid = (data) => {
     if (!isDisabled && firstName && lastName) {
+      dispatch(setFormDataAC(data));
       changeStep();
     } else {
       setIsDisabled(true);
     }
+  };
+
+  const onSubmit = (data) => {
+    checkIsFieldsValid(data);
   };
 
   useMemo(() => {
@@ -29,7 +39,7 @@ export const SignUpFormSecond = ({ changeStep }) => {
   }, [firstName, lastName]);
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h4 className={styles.formTitle}>Регистрация</h4>
       <div className={styles.steps}>
         <span>2</span> шаг из <span>3</span>
@@ -73,13 +83,13 @@ export const SignUpFormSecond = ({ changeStep }) => {
         </div>
       </div>
 
-      <button type='button' disabled={isDisabled} className={styles.nextStepBtn} onClick={handleClick}>
+      <button type='submit' disabled={isDisabled} className={styles.nextStepBtn}>
         последний шаг
       </button>
 
       <div className={styles.hasAccount}>
         <span className={styles.sign}>Есть учётная запись?</span>
-        <Link to='/signIn'>
+        <Link to='/auth'>
           <span className={styles.signInLink}>войти</span>
         </Link>
       </div>

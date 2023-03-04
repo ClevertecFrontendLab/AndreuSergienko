@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { fetchSignUp, setFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
 
 export const SignUpFormFinal = () => {
+  const dispatch = useDispatch();
+  const formData = useSelector((state) => state.form.data);
+
   const {
     register,
     reset,
@@ -37,7 +42,7 @@ export const SignUpFormFinal = () => {
 
   useEffect(() => {
     const subscription = watch((value) => {
-      setTel(value?.tel);
+      setTel(value?.phone);
       setEmail(value?.email);
     });
 
@@ -77,11 +82,8 @@ export const SignUpFormFinal = () => {
 
   const onSubmit = (data) => {
     if (!isDisabled && isTelValid && isEmailValid) {
-      console.log(data);
-      resetField('tel', {
-        defaultValue: '',
-      });
-      reset();
+      dispatch(setFormDataAC(data));
+      dispatch(fetchSignUp({ ...formData, ...data }));
     } else {
       setIsDisabled(true);
     }
@@ -102,16 +104,17 @@ export const SignUpFormFinal = () => {
       <div className={styles.fields}>
         <div className={styles.field}>
           <InputMask
-            {...register('tel', {
+            {...register('phone', {
               onBlur: (e) => onBlurTel(e.target.value),
             })}
+            value={tel}
             className={styles.input}
             type='tel'
             mask='+375(99)999-99-99'
             placeholder='Номер телефона'
           />
 
-          {errors?.tel ? validTel(tel) : validTel(tel)}
+          {errors?.phone ? validTel(tel) : validTel(tel)}
         </div>
 
         <div className={styles.field}>
@@ -119,6 +122,7 @@ export const SignUpFormFinal = () => {
             {...register('email', {
               onBlur: (e) => onBlurEmail(e.target.value),
             })}
+            value={email}
             className={styles.input}
             type='email'
             placeholder='E-mail'
@@ -134,7 +138,7 @@ export const SignUpFormFinal = () => {
 
       <div className={styles.hasAccount}>
         <span className={styles.sign}>Есть учётная запись?</span>
-        <Link to='/signIn'>
+        <Link to='/auth'>
           <span className={styles.signInLink}>войти</span>
         </Link>
       </div>

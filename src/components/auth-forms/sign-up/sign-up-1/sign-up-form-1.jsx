@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IconEyeClose, IconEyeOpen, IconOkey } from 'assets/images/auth';
 import classNames from 'classnames/bind';
+import { setFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
 
 export const SignUpFormFirst = ({ changeStep }) => {
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const dispatch = useDispatch();
 
   const formStyles = {
     input: styles.input,
@@ -44,7 +44,7 @@ export const SignUpFormFirst = ({ changeStep }) => {
 
   useEffect(() => {
     const subscription = watch((value) => {
-      setLogin(value?.login);
+      setLogin(value?.username);
       setPassword(value?.password);
     });
 
@@ -248,18 +248,24 @@ export const SignUpFormFirst = ({ changeStep }) => {
     refTipPassword.current.style.color = '#a7a7a7';
   };
 
-  const handleClick = () => {
-    if (isLoginValid && isPasswordValid && !isDisabled && watch('login') && watch('password')) {
+  const checkIsFieldsValid = (data) => {
+    if (isLoginValid && isPasswordValid && !isDisabled && watch('username') && watch('password')) {
       changeStep();
+      dispatch(setFormDataAC(data));
+    
     } else {
       if (!watch('password')) onBlurPassword('');
-      if (!watch('login')) onBlurLogin('');
+      if (!watch('username')) onBlurLogin('');
       setIsDisabled(true);
     }
   };
 
+  const onSubmit = (data) => {
+    checkIsFieldsValid(data);
+  };
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h4 className={styles.formTitle}>Регистрация</h4>
       <div className={styles.steps}>
         <span>1</span> шаг из <span>3</span>
@@ -267,12 +273,12 @@ export const SignUpFormFirst = ({ changeStep }) => {
       <div className={styles.fields}>
         <div className={styles.field}>
           <input
-            {...register('login', {
+            {...register('username', {
               required: true,
               onBlur: (e) => onBlurLogin(e.target.value),
             })}
             onFocus={onFocusLogin}
-            name='login'
+            name='username'
             value={login}
             className={cx('input', { error: !isLoginValid })}
             type='text'
@@ -304,13 +310,13 @@ export const SignUpFormFirst = ({ changeStep }) => {
         </div>
       </div>
 
-      <button type='button' disabled={isDisabled} className={styles.nextStepBtn} onClick={handleClick}>
+      <button type='submit' disabled={isDisabled} className={styles.nextStepBtn}>
         следующий шаг
       </button>
 
       <div className={styles.hasAccount}>
         <span className={styles.sign}>Есть учётная запись?</span>
-        <Link to='/signIn'>
+        <Link to='/auth'>
           <span className={styles.signInLink}>войти</span>
         </Link>
       </div>
