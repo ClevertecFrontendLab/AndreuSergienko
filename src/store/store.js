@@ -10,10 +10,12 @@ import {
   commentsReducer,
   currBookReducer,
   errorReducer,
+  formReducer,
   menuReducer,
   preloaderReducer,
+  registrationReducer,
   searchReducer,
-  sortReducer
+  sortReducer,
 } from './reducers';
 
 const reducers = combineReducers({
@@ -28,6 +30,8 @@ const reducers = combineReducers({
   preloader: preloaderReducer,
   error: errorReducer,
   sort: sortReducer,
+  form: formReducer,
+  registration: registrationReducer,
 });
 
 export const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
