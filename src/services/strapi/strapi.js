@@ -1,5 +1,8 @@
+import axios from 'axios';
+
 export class Strapi {
   apiBase = 'https://strapi.cleverland.by';
+
 
   async getBooks() {
     const response = await fetch(`${this.apiBase}/api/books`);
@@ -22,6 +25,38 @@ export class Strapi {
     const data = await response.json();
 
     return [{ name: 'Все книги', path: 'all' }, ...data];
+  }
+
+  async signUp(formData) {
+    const authResponse = await axios.post(
+      `${this.apiBase}/api/auth/local/register`,
+      {
+        ...formData,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    return authResponse;
+  }
+
+  async signIn(userCreds, jwtToken) {
+    const authResponse = await axios.post(
+      `${this.apiBase}/api/auth/local`,
+      {
+        ...userCreds,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    );
+
+    return authResponse;
   }
 
   transformCard = (book) => ({
