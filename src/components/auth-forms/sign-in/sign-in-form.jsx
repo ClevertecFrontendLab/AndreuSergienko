@@ -1,33 +1,49 @@
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-
-import { SIGN_IN_FORM as signInForm } from '../../../constants';
+import { fetchSignIn } from 'store';
 
 import styles from './sign-in-form.module.css';
 
 export const SignInForm = () => {
-  const { inputs, link, buttonContent } = signInForm;
+  const { handleSubmit, register } = useForm();
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    const jwt = localStorage.getItem('jwt');
+    
+    dispatch(fetchSignIn(data, jwt));
+  };
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h4 className={styles.formTitle}>Вход в личный кабинет</h4>
       <div className={styles.fields}>
-        {inputs?.map((input) => (
-          <div className={styles.field} key={uuidv4()}>
-            <input className={styles.input} type={input.type} placeholder={input.placeholder} />
-            {input.tip ? <span className={styles.inputTip}>{input.tip}</span> : null}
-          </div>
-        ))}
+        <div className={styles.field}>
+          <input {...register('identifier')} className={styles.input} name='identifier' type='text' placeholder='Логин' />
+          {/* {input.tip ? <span className={styles.inputTip}>{input.tip}</span> : null} */}
+        </div>
+
+        <div className={styles.field}>
+          <input
+            {...register('password')}
+            className={styles.input}
+            type='password'
+            name='password'
+            placeholder='Пароль'
+          />
+          {/* {input.tip ? <span className={styles.inputTip}>{input.tip}</span> : null} */}
+        </div>
       </div>
 
-      <button type='button' className={styles.signInBtn}>
-        {buttonContent}
+      <button type='submit' className={styles.signInBtn}>
+        войти
       </button>
 
       <div className={styles.hasNoAccount}>
         <span className={styles.sign}>Нет учётной записи?</span>
-        <Link to={link.path}>
-          <span className={styles.signUpLink}>{link.content}</span>
+        <Link to='/registration'>
+          <span className={styles.signUpLink}>регистрация</span>
         </Link>
       </div>
     </form>
