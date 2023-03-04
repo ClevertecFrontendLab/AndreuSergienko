@@ -1,7 +1,7 @@
 import { ACTIONS } from 'constants';
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
 };
 
 export const preloaderReducer = (state = initialState, action) => {
