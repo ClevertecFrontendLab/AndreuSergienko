@@ -1,16 +1,17 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Layout, LayoutMainPage, SignInForm, SignUpForm } from 'components';
+import { Layout, LayoutMainPage, Preloader, SignInForm, SignUpForm } from 'components';
 import { AuthPage, BookPage, MainPage, TermsPage } from 'pages';
 
 import './app.css';
 
 export const App = () => (
   <div className='app'>
+    <Preloader />
     <Routes>
       <Route element={<AuthPage />}>
-        <Route path='/' element={<Navigate to='/signIn' />} />
-        <Route path='/signIn' element={<SignInForm />} />
-        <Route path='/signUp' element={<SignUpForm />} />
+        <Route path='/' element={<Navigate to='/auth' />} />
+        <Route path='/auth' element={<SignInForm />} />
+        <Route path='/registration' element={<SignUpForm />} />
       </Route>
       <Route path='/' element={<Layout />}>
         <Route element={<LayoutMainPage />}>
