@@ -13,89 +13,40 @@ export const ACTIONS = {
   setCategoriesError: 'SET_CATEGORIES_ERROR',
   setBooksError: 'SET_BOOKS_ERROR',
   setCurrBookError: 'SET_CURR_BOOK_ERROR',
+  setFormData: 'SET_FORM_DATA',
+  setRegResponse: 'SET_REG_RESPONSE',
+  setRegStatus: 'SET_REG_STATUS',
 };
 
-export const SIGN_UP_FORM = {
-  fields: [
-    {
-      inputs: [
-        {
-          name: 'login',
-          type: 'text',
-          placeholder: 'Придумайте логин для входа',
-          tip: 'Используйте для логина латинский алфавит и цифры',
-        },
-        {
-          name: 'password',
-          type: 'password',
-          placeholder: 'Пароль',
-          tip: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
-        },
-      ],
-      button: {
-        content: 'следующий шаг',
-      },
-    },
-    {
-      inputs: [
-        {
-          name: 'firstName',
-          type: 'text',
-          placeholder: 'Имя',
-          errorTip: 'Поле не должно быть пустым',
-        },
-        {
-          name: 'lastName',
-          type: 'text',
-          placeholder: 'Фамилия',
-          errorTip: 'Поле не должно быть пустым',
-        },
-      ],
-      button: {
-        content: 'последний шаг',
-      },
-    },
-    {
-      inputs: [
-        {
-          name: 'tel',
-          type: 'tel',
-          placeholder: 'Номер телефона',
-          tip: 'В формате +375 (xx) xxx-xx-xx',
-        },
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'E-mail',
-          errorTip: 'Введите корректный email',
-        },
-      ],
-      button: {
-        content: 'зарегистрироваться',
-        type: 'submit',
-      },
-    },
-  ],
+export const SUCCESS_FB = {
+  title: 'Регистрация успешна',
+  errorText: 'Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль',
   link: {
-    content: 'войти',
-    path: '/signIn',
+    content: 'вход',
+    path: '/auth',
   },
 };
 
-export const SIGN_IN_FORM = {
-  inputs: [
-    {
-      type: 'text',
-      placeholder: 'Логин',
-    },
-    {
-      type: 'password',
-      placeholder: 'Пароль',
-    },
-  ],
-  buttonContent: 'вход',
+export const NON_UNIQUE_FB = {
+  title: 'Данные не сохранились',
+  errorText:
+    'Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.',
   link: {
-    content: 'регистрация',
+    content: 'назад к регистрации',
+    path: '/registration',
+  },
+};
+
+export const FAILED_FB = {
+  title: 'Данные не сохранились',
+  errorText: 'Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз',
+  link: {
+    content: 'повторить',
     path: '/signUp',
   },
+};
+
+export const ERRORS = {
+  uniques: 'ApplicationError',
+  nonValidate: 'ValidateError',
 };
