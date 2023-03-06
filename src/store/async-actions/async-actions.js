@@ -1,5 +1,6 @@
 import { StrapiService } from 'services/strapi';
 import {
+  setAuthStatusAC,
   setBooksAC,
   setBooksErrorAC,
   setCategoriesAC,
@@ -27,15 +28,15 @@ export const fetchSignUp = (data) => async (dispatch) => {
 };
 
 export const fetchSignIn = (data, jwt) => async (dispatch) => {
+  dispatch(setLoadingAC(true));
   try {
     const response = await StrapiService.signIn(data, jwt);
 
-    console.log(response);
-
-    // dispatch(setCategoriesAC(response));
+    dispatch(setAuthStatusAC(response.status));
   } catch (e) {
-    console.log(e);
     // dispatch(setCategoriesErrorAC(true));
+  } finally {
+    dispatch(setLoadingAC(false));
   }
 };
 
