@@ -16,6 +16,7 @@ export const ACTIONS = {
   setFormData: 'SET_FORM_DATA',
   setRegResponse: 'SET_REG_RESPONSE',
   setRegStatus: 'SET_REG_STATUS',
+  setAuthStatus: 'SET_AUTH_STATUS',
 };
 
 export const SUCCESS_FB = {
