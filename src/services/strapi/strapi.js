@@ -3,7 +3,6 @@ import axios from 'axios';
 export class Strapi {
   apiBase = 'https://strapi.cleverland.by';
 
-
   async getBooks() {
     const response = await fetch(`${this.apiBase}/api/books`);
 
@@ -43,7 +42,7 @@ export class Strapi {
     return authResponse;
   }
 
-  async signIn(userCreds, jwtToken) {
+  async signIn(userCreds) {
     const authResponse = await axios.post(
       `${this.apiBase}/api/auth/local`,
       {
@@ -51,7 +50,7 @@ export class Strapi {
       },
       {
         headers: {
-          Authorization: `Bearer ${jwtToken}`,
+          'Content-Type': 'application/json',
         },
       }
     );
