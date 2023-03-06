@@ -69,11 +69,6 @@
    color: #A7A7A7;
 }
 
-/* .field .input:focus+.focusedPlaceholder {
-   opacity: 1;
-   visibility: visible;
-} */
-
 .focusedPlaceholder.placeholderActive {
    opacity: 1;
    visibility: visible;
