@@ -302,9 +302,11 @@ export const SignUpFormFirst = ({ changeStep }) => {
             type='text'
             placeholder='Придумайте логин для входа'
           />
+
           <span className={cx('focusedPlaceholder', { placeholderActive: isLoginPlaceholder })}>
             Придумайте логин для входа
           </span>
+
           {errors?.login ? validLogin(login) : validLogin(login)}
         </div>
 

@@ -50,7 +50,8 @@ export const SignUpFormFinal = () => {
   const cx = classNames.bind(formStyles);
 
   const onBlurTel = (value) => {
-    if (!tel.length) {
+    setTel(value);
+    if (!value.length) {
       setIsTelPlaceholder(false);
     }
     if (!value.includes('_') && value !== '') {
@@ -59,6 +60,7 @@ export const SignUpFormFinal = () => {
   };
 
   const onBlurEmail = (value) => {
+    setEmail(value);
     if (!email.length) {
       setIsEmailPlaceholder(false);
     }
@@ -67,8 +69,9 @@ export const SignUpFormFinal = () => {
     }
   };
 
-  const onTelFocus = () => {
+  const onTelFocus = (value) => {
     setIsTelPlaceholder(true);
+    setTel(value);
   };
 
   const onEmailFocus = () => {
@@ -133,7 +136,7 @@ export const SignUpFormFinal = () => {
             {...register('phone', {
               onBlur: (e) => onBlurTel(e.target.value),
             })}
-            onFocus={onTelFocus}
+            onFocus={(e) => onTelFocus(e.target.value)}
             value={tel}
             className={cx('input', { placeholderActive: isTelPlaceholder })}
             type='tel'

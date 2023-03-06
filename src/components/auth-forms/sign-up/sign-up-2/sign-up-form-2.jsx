@@ -54,7 +54,8 @@ export const SignUpFormSecond = ({ changeStep }) => {
     checkIsFieldsValid(data);
   };
 
-  const onFirstNameBlur = () => {
+  const onFirstNameBlur = (value) => {
+    setFirstName(value);
     if (!firstName.length) {
       setIsFirstNamePlaceholder(false);
     }
@@ -68,7 +69,8 @@ export const SignUpFormSecond = ({ changeStep }) => {
     setIsLastNamePlaceholder(true);
   };
 
-  const onLastNameBlur = () => {
+  const onLastNameBlur = (value) => {
+    setLastName(value);
     if (!lastName.length) {
       setIsLastNamePlaceholder(false);
     }
@@ -91,9 +93,9 @@ export const SignUpFormSecond = ({ changeStep }) => {
           <input
             {...register('firstName', {
               required: true,
+              onBlur: (e) => onFirstNameBlur(e.target.value),
             })}
             value={firstName}
-            onBlur={onFirstNameBlur}
             onFocus={onFirstNameFocus}
             name='firstName'
             className={cx('input', { placeholderActive: isFirstNamePlaceholder })}
@@ -114,8 +116,8 @@ export const SignUpFormSecond = ({ changeStep }) => {
           <input
             {...register('lastName', {
               required: true,
+              onBlur: (e) => onLastNameBlur(e.target.value),
             })}
-            onBlur={onLastNameBlur}
             onFocus={onLastNameFocus}
             value={lastName}
             name='lastName'
