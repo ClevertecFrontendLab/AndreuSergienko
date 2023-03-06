@@ -2,6 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
+import { authReducer } from './reducers/auth-reducer';
 import {
   accordionReducer,
   booksReducer,
@@ -32,6 +33,7 @@ const reducers = combineReducers({
   sort: sortReducer,
   form: formReducer,
   registration: registrationReducer,
+  auth: authReducer,
 });
 
 export const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
