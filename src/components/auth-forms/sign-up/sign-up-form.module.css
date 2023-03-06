@@ -48,6 +48,37 @@
    padding-left: 12px;
 }
 
+.input.placeholderActive {
+   padding-top: 10px;
+}
+
+.input.placeholderActive::placeholder {
+   color: transparent;
+}
+
+.focusedPlaceholder {
+   opacity: 0;
+   visibility: hidden;
+   position: absolute;
+   top: 6px;
+   left: 12px;
+   font-weight: 500;
+   font-size: 12px;
+   line-height: 16px;
+   letter-spacing: 0.2px;
+   color: #A7A7A7;
+}
+
+/* .field .input:focus+.focusedPlaceholder {
+   opacity: 1;
+   visibility: visible;
+} */
+
+.focusedPlaceholder.placeholderActive {
+   opacity: 1;
+   visibility: visible;
+}
+
 .inputError {
    border-bottom: 1px solid #f42c4f;
 }

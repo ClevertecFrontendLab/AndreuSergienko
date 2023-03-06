@@ -14,6 +14,8 @@ export const SignUpFormFirst = ({ changeStep }) => {
   const formStyles = {
     input: styles.input,
     error: styles.inputError,
+    focusedPlaceholder: styles.focusedPlaceholder,
+    placeholderActive: styles.placeholderActive,
     iconSuccess: styles.iconSuccess,
     iconSuccessActive: styles.iconSuccessActive,
     iconEye: styles.iconEye,
@@ -38,6 +40,9 @@ export const SignUpFormFirst = ({ changeStep }) => {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
   const [isDisabled, setIsDisabled] = useState(false);
+
+  const [isLoginPlaceholder, setIsLoginPlaceholder] = useState(false);
+  const [isPasswordPlaceholder, setIsPasswordPlaceholder] = useState(false);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [check, setCheck] = useState(false);
@@ -221,6 +226,9 @@ export const SignUpFormFirst = ({ changeStep }) => {
   };
 
   const onBlurLogin = (value) => {
+    if (!login.length) {
+      setIsLoginPlaceholder(false);
+    }
     if (value.match(/^(?=^.{1,}$)((?=.*\d)(?=.*[a-zA-Z]))[0-9a-zA-Z]*$/)) {
       setIsLoginValid(true);
     } else {
@@ -230,6 +238,9 @@ export const SignUpFormFirst = ({ changeStep }) => {
   };
 
   const onBlurPassword = (value) => {
+    if (!password.length) {
+      setIsPasswordPlaceholder(false);
+    }
     if (value.match(/(?=.*[A-Z])(?=.*[0-9])[a-zA-ZА-Яа-я0-9]{8,}/)) {
       setIsPasswordValid(true);
       setCheck(true);
@@ -241,10 +252,12 @@ export const SignUpFormFirst = ({ changeStep }) => {
   };
 
   const onFocusLogin = () => {
+    setIsLoginPlaceholder(true);
     refTipLogin.current.style.color = '#a7a7a7';
   };
 
   const onFocusPassword = () => {
+    setIsPasswordPlaceholder(true);
     refTipPassword.current.style.color = '#a7a7a7';
   };
 
@@ -252,7 +265,6 @@ export const SignUpFormFirst = ({ changeStep }) => {
     if (isLoginValid && isPasswordValid && !isDisabled && watch('username') && watch('password')) {
       changeStep();
       dispatch(setFormDataAC(data));
-    
     } else {
       if (!watch('password')) onBlurPassword('');
       if (!watch('username')) onBlurLogin('');
@@ -263,6 +275,12 @@ export const SignUpFormFirst = ({ changeStep }) => {
   const onSubmit = (data) => {
     checkIsFieldsValid(data);
   };
+
+  // const handleClick = () => {
+  //   if (!isLoginValid && !isPasswordValid) {
+  //     setIsDisabled(true);
+  //   }
+  // };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -280,10 +298,13 @@ export const SignUpFormFirst = ({ changeStep }) => {
             onFocus={onFocusLogin}
             name='username'
             value={login}
-            className={cx('input', { error: !isLoginValid })}
+            className={cx('input', { error: !isLoginValid }, { placeholderActive: isLoginPlaceholder })}
             type='text'
             placeholder='Придумайте логин для входа'
           />
+          <span className={cx('focusedPlaceholder', { placeholderActive: isLoginPlaceholder })}>
+            Придумайте логин для входа
+          </span>
           {errors?.login ? validLogin(login) : validLogin(login)}
         </div>
 
@@ -296,10 +317,11 @@ export const SignUpFormFirst = ({ changeStep }) => {
             onFocus={onFocusPassword}
             value={password}
             name='password'
-            className={cx('input', { error: !isPasswordValid })}
+            className={cx('input', { error: !isPasswordValid }, { placeholderActive: isPasswordPlaceholder })}
             type={isPasswordVisible ? 'text' : 'password'}
             placeholder='Пароль'
           />
+          <span className={cx('focusedPlaceholder', { placeholderActive: isPasswordPlaceholder })}>Пароль</span>
 
           <span className={cx('iconSuccess', { iconSuccessActive: check })}>{IconOkey}</span>
           <button className={styles.iconEye} type='button' onClick={() => setIsPasswordVisible(!isPasswordVisible)}>

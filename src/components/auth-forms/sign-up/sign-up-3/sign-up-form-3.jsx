@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames/bind';
 import { fetchSignUp, setFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
@@ -26,19 +27,10 @@ export const SignUpFormFinal = () => {
   const [isTelValid, setIsTelValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
 
+  const [isTelPlaceholder, setIsTelPlaceholder] = useState(false);
+  const [isEmailPlaceholder, setIsEmailPlaceholder] = useState(false);
+
   const [isDisabled, setIsDisabled] = useState(false);
-
-  const onBlurTel = (value) => {
-    if (!value.includes('_') && value !== '') {
-      setIsTelValid(true);
-    }
-  };
-
-  const onBlurEmail = (value) => {
-    if (value.match(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/) && value !== '') {
-      setIsEmailValid(true);
-    }
-  };
 
   useEffect(() => {
     const subscription = watch((value) => {
@@ -48,6 +40,40 @@ export const SignUpFormFinal = () => {
 
     return () => subscription.unsubscribe();
   }, [watch]);
+
+  const formStyles = {
+    input: styles.input,
+    focusedPlaceholder: styles.focusedPlaceholder,
+    placeholderActive: styles.placeholderActive,
+  };
+
+  const cx = classNames.bind(formStyles);
+
+  const onBlurTel = (value) => {
+    if (!tel.length) {
+      setIsTelPlaceholder(false);
+    }
+    if (!value.includes('_') && value !== '') {
+      setIsTelValid(true);
+    }
+  };
+
+  const onBlurEmail = (value) => {
+    if (!email.length) {
+      setIsEmailPlaceholder(false);
+    }
+    if (value.match(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/) && value !== '') {
+      setIsEmailValid(true);
+    }
+  };
+
+  const onTelFocus = () => {
+    setIsTelPlaceholder(true);
+  };
+
+  const onEmailFocus = () => {
+    setIsEmailPlaceholder(true);
+  };
 
   const validEmail = (value) => {
     if (!value || !value.length) {
@@ -107,12 +133,15 @@ export const SignUpFormFinal = () => {
             {...register('phone', {
               onBlur: (e) => onBlurTel(e.target.value),
             })}
+            onFocus={onTelFocus}
             value={tel}
-            className={styles.input}
+            className={cx('input', { placeholderActive: isTelPlaceholder })}
             type='tel'
             mask='+375(99)999-99-99'
             placeholder='Номер телефона'
           />
+
+          <span className={cx('focusedPlaceholder', { placeholderActive: isTelPlaceholder })}>Номер телефона</span>
 
           {errors?.phone ? validTel(tel) : validTel(tel)}
         </div>
@@ -122,11 +151,13 @@ export const SignUpFormFinal = () => {
             {...register('email', {
               onBlur: (e) => onBlurEmail(e.target.value),
             })}
+            onFocus={onEmailFocus}
             value={email}
-            className={styles.input}
+            className={cx('input', { placeholderActive: isEmailPlaceholder })}
             type='email'
             placeholder='E-mail'
           />
+          <span className={cx('focusedPlaceholder', { placeholderActive: isEmailPlaceholder })}>E-mail</span>
 
           {errors?.email ? validEmail(email) : validEmail(email)}
         </div>

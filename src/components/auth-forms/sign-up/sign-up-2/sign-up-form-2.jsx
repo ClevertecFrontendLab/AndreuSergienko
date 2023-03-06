@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames/bind';
 import { setFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
@@ -9,15 +10,36 @@ import styles from '../sign-up-form.module.css';
 export const SignUpFormSecond = ({ changeStep }) => {
   const dispatch = useDispatch();
 
+  const formStyles = {
+    input: styles.input,
+    focusedPlaceholder: styles.focusedPlaceholder,
+    placeholderActive: styles.placeholderActive,
+  };
+
+  const cx = classNames.bind(formStyles);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm({ mode: 'onBlur' });
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  const [isFirstNamePlaceholder, setIsFirstNamePlaceholder] = useState(false);
+  const [isLastNamePlaceholder, setIsLastNamePlaceholder] = useState(false);
+
+  useEffect(() => {
+    const subscription = watch((value) => {
+      setFirstName(value?.firstName);
+      setLastName(value?.lastName);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const checkIsFieldsValid = (data) => {
     if (!isDisabled && firstName && lastName) {
@@ -30,6 +52,26 @@ export const SignUpFormSecond = ({ changeStep }) => {
 
   const onSubmit = (data) => {
     checkIsFieldsValid(data);
+  };
+
+  const onFirstNameBlur = () => {
+    if (!firstName.length) {
+      setIsFirstNamePlaceholder(false);
+    }
+  };
+
+  const onFirstNameFocus = () => {
+    setIsFirstNamePlaceholder(true);
+  };
+
+  const onLastNameFocus = () => {
+    setIsLastNamePlaceholder(true);
+  };
+
+  const onLastNameBlur = () => {
+    if (!lastName.length) {
+      setIsLastNamePlaceholder(false);
+    }
   };
 
   useMemo(() => {
@@ -49,13 +91,18 @@ export const SignUpFormSecond = ({ changeStep }) => {
           <input
             {...register('firstName', {
               required: true,
-              onBlur: (e) => setFirstName(e.target.value),
             })}
+            value={firstName}
+            onBlur={onFirstNameBlur}
+            onFocus={onFirstNameFocus}
             name='firstName'
-            className={styles.input}
+            className={cx('input', { placeholderActive: isFirstNamePlaceholder })}
             type='text'
             placeholder='Имя'
           />
+
+          <span className={cx('focusedPlaceholder', { placeholderActive: isFirstNamePlaceholder })}>Имя</span>
+
           {errors?.firstName && (
             <span style={{ color: '#f42c4f' }} className={styles.inputTip}>
               Поле не должно быть пустым
@@ -67,13 +114,16 @@ export const SignUpFormSecond = ({ changeStep }) => {
           <input
             {...register('lastName', {
               required: true,
-              onBlur: (e) => setLastName(e.target.value),
             })}
+            onBlur={onLastNameBlur}
+            onFocus={onLastNameFocus}
+            value={lastName}
             name='lastName'
-            className={styles.input}
+            className={cx('input', { placeholderActive: isLastNamePlaceholder })}
             type='text'
             placeholder='Фамилия'
           />
+          <span className={cx('focusedPlaceholder', { placeholderActive: isLastNamePlaceholder })}>Фамилия</span>
 
           {errors?.lastName && (
             <span style={{ color: '#f42c4f' }} className={styles.inputTip}>
