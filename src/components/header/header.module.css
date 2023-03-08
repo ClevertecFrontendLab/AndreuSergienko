@@ -4,6 +4,10 @@
    font-family: 'Montserrat';
 }
 
+.header.controlsActive {
+   box-shadow: 4px 4px 4px rgba(54, 54, 54, 0.05), -4px 4px 4px rgba(54, 54, 54, 0.05);
+}
+
 .container {
    display: flex;
    align-items: center;
@@ -62,6 +66,8 @@
    display: flex;
    align-items: center;
    gap: 7px;
+   position: relative;
+   cursor: pointer;
 }
 
 .greet {
@@ -69,6 +75,32 @@
    font-size: 14px;
    line-height: 18px;
    letter-spacing: 0.1px
+}
+
+.controls {
+   padding: 32px 24px;
+   position: absolute;
+   right: 0;
+   bottom: -152px;
+   min-width: 270px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   gap: 32px;
+   background: #FFFFFF;
+   box-shadow: 4px 4px 4px rgba(54, 54, 54, 0.05), -4px 4px 4px rgba(54, 54, 54, 0.05);
+   border-radius: 0px 0px 10px 10px;
+}
+
+.controlsBtn {
+   background: transparent;
+   border: none;
+   font-weight: 700;
+   font-size: 18px;
+   line-height: 28px;
+   letter-spacing: 0.1px;
+   color: #363636;
+   cursor: pointer;
 }
 
 @media (max-width: 950px) {
