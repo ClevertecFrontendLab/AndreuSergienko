@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,22 +13,19 @@ export const BookPage = () => {
   const { bookId } = useParams();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const currBook = useSelector((state) => state.currentBook.book);
   const isBookError = useSelector((state) => state.error.currBookError);
 
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    let ignore = false;
-
-    if (!ignore) {
+    if (localStorage.getItem('jwt')) {
       dispatch(fetchBook(bookId));
+    } else {
+      navigate('/auth');
     }
-
-    return () => {
-      ignore = true;
-    };
-  }, [bookId, dispatch]);
+  }, [bookId, dispatch, navigate]);
 
   const setImage = (img) => setActiveImage(img);
 

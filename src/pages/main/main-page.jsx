@@ -1,16 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-
-import classNames from 'classnames/bind';
-
-import { setCardsDisplayAC, setTermAC, toggleSearchAC, toggleSortRuleAC } from 'store';
-
-import { fetchBooks } from 'store/async-actions';
-
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { CrossIcon, ListIcon, SearchIcon, WindowIcon } from 'assets/images/main-page';
 import { SortIcon } from 'assets/images/main-page/icons';
+import classNames from 'classnames/bind';
 import { Card, ErrorTooltip } from 'components';
+import { setCardsDisplayAC, setLoadingAC, setTermAC, toggleSearchAC, toggleSortRuleAC } from 'store';
+import { fetchBooks, fetchCategories } from 'store/async-actions';
+
 import styles from './main-page.module.css';
 
 export const MainPage = () => {
@@ -25,13 +23,25 @@ export const MainPage = () => {
   const term = useSelector((state) => state.search.term);
   const sortRule = useSelector((state) => state.sort.sortRule);
 
+  const navigate = useNavigate();
+
   const { bookCategory } = useParams();
 
   useEffect(() => {
     let ignore = false;
-    if (!ignore) {
-      dispatch(fetchBooks());
+
+    if (localStorage.getItem('jwt')) {
+      dispatch(setLoadingAC(true));
+      if (!ignore) {
+        dispatch(fetchBooks());
+      }
+      if (!categories) {
+        dispatch(fetchCategories());
+      }
+    } else {
+      navigate('/auth');
     }
+
     return () => {
       ignore = true;
     };
@@ -84,6 +94,7 @@ export const MainPage = () => {
       );
 
     const items = arr?.filter((book) => book.title.toLowerCase().includes(term.toLowerCase()));
+
     if (!items?.length)
       return (
         <h2 className={styles.noBooksFound} data-test-id='search-result-not-found'>

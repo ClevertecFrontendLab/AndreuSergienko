@@ -1,13 +1,12 @@
-import classNames from 'classnames/bind';
-import { useEffect, useRef } from 'react';
-import { Link, NavLink, useParams } from 'react-router-dom';
-
-import { ErrorTooltip } from 'components';
-
+import { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories, toggleAccordionAC, toggleMenuAC } from 'store';
-
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
 import { ChevronIcon } from 'assets/images/main-page';
+import classNames from 'classnames/bind';
+import { ErrorTooltip } from 'components';
+import { StrapiService } from 'services/strapi';
+import { fetchCategories, setAuthStatusAC, toggleAccordionAC, toggleMenuAC } from 'store';
+
 import styles from './sidebar.module.css';
 
 export const Sidebar = () => {
@@ -22,6 +21,8 @@ export const Sidebar = () => {
 
   const { bookCategory } = useParams();
   const { bookId } = useParams();
+
+  const navigate = useNavigate();
 
   const menuRef = useRef();
 
@@ -49,19 +50,20 @@ export const Sidebar = () => {
     };
   });
 
-  useEffect(() => {
-    if (!categories) {
-      dispatch(fetchCategories());
-    }
-  }, [dispatch, categories]);
-
   const countBooksQuantity = (books, categories) =>
     categories
       ?.map((category) => {
         const filtered = books?.filter((book) => book.categories.find((bc) => bc === category.name));
+
         return filtered?.length;
       })
       .map((item, i) => (i === 0 ? null : item));
+
+  const handleSignOut = () => {
+    StrapiService.signOut();
+    dispatch(setAuthStatusAC(''));
+    navigate('/auth');
+  };
 
   const booksQuantity = countBooksQuantity(books, categories);
 
@@ -82,7 +84,7 @@ export const Sidebar = () => {
 
   if (isCategoriesError) {
     return (
-      <>
+      <Fragment>
         <ErrorTooltip />
         <aside ref={menuRef} className={cx('aside', { active: isBurger })} data-test-id='burger-navigation'>
           <ul className={styles.list}>
@@ -123,7 +125,7 @@ export const Sidebar = () => {
             </li>
           </ul>
         </aside>
-      </>
+      </Fragment>
     );
   }
 
@@ -152,7 +154,6 @@ export const Sidebar = () => {
                     key={name}
                     to={`/books/${path}`}
                     data-test-id={`navigation-${path === 'all' ? 'books' : path}`}
-                    onClick={() => toggleMenu()}
                     className={styles.desktopLink}
                   >
                     {name}
@@ -206,9 +207,9 @@ export const Sidebar = () => {
           </NavLink>
         </li>
         <li className={styles.item}>
-          <NavLink to='/exit' className={setActive}>
+          <button type='button' onClick={handleSignOut}>
             Выход
-          </NavLink>
+          </button>
         </li>
       </ul>
     </aside>

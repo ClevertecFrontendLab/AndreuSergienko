@@ -13,23 +13,13 @@ export const SignInForm = () => {
   const authStatus = useSelector((state) => state.auth.status);
 
   useEffect(() => {
-    let ignore = false;
-
-    if (!ignore) {
-      if (authStatus === 200) {
-        navigate('/books/all');
-      }
+    if (authStatus === 200) {
+      navigate('/books/all');
     }
-
-    return () => {
-      ignore = true;
-    };
   }, [authStatus, navigate]);
 
   const onSubmit = (data) => {
-    const jwt = localStorage.getItem('jwt');
-
-    dispatch(fetchSignIn(data, jwt));
+    dispatch(fetchSignIn(data));
   };
 
   return (
