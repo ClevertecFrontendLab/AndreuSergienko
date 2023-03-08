@@ -1,8 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { defaultBg } from 'assets/images/main-page/books';
-
 import { Rating } from 'components';
+import { v4 as uuidv4 } from 'uuid';
 
 import styles from './card-by-tile.module.css';
 

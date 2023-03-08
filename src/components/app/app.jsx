@@ -8,11 +8,6 @@ export const App = () => (
   <div className='app'>
     <Preloader />
     <Routes>
-      <Route element={<AuthPage />}>
-        <Route path='/' element={<Navigate to='/auth' />} />
-        <Route path='/auth' element={<SignInForm />} />
-        <Route path='/registration' element={<SignUpForm />} />
-      </Route>
       <Route path='/' element={<Layout />}>
         <Route element={<LayoutMainPage />}>
           <Route path='/' element={<Navigate to='/books/all' />} />
@@ -21,6 +16,11 @@ export const App = () => (
           <Route path='/contract' element={<TermsPage title='Договор Оферты' />} />
         </Route>
         <Route path='/books/:bookCategory/:bookId' element={<BookPage />} />
+      </Route>
+      <Route element={<AuthPage />}>
+        <Route path='/' element={<Navigate to='/auth' />} />
+        <Route path='/auth' element={<SignInForm />} />
+        <Route path='/registration' element={<SignUpForm />} />
       </Route>
     </Routes>
   </div>

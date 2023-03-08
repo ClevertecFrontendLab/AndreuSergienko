@@ -27,14 +27,16 @@ export const fetchSignUp = (data) => async (dispatch) => {
   }
 };
 
-export const fetchSignIn = (data, jwt) => async (dispatch) => {
+export const fetchSignIn = (data) => async (dispatch) => {
   dispatch(setLoadingAC(true));
   try {
-    const response = await StrapiService.signIn(data, jwt);
+    const response = await StrapiService.signIn(data);
+
+    localStorage.setItem('jwt', response.data?.jwt);
 
     dispatch(setAuthStatusAC(response.status));
   } catch (e) {
-    // dispatch(setCategoriesErrorAC(true));
+    console.log(e);
   } finally {
     dispatch(setLoadingAC(false));
   }
@@ -51,7 +53,6 @@ export const fetchCategories = () => async (dispatch) => {
 };
 
 export const fetchBooks = () => async (dispatch) => {
-  dispatch(setLoadingAC(true));
   try {
     const response = await StrapiService.getBooks();
 
