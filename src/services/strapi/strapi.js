@@ -1,29 +1,42 @@
+/* eslint-disable class-methods-use-this */
 import axios from 'axios';
 
 export class Strapi {
   apiBase = 'https://strapi.cleverland.by';
 
+  jwt = localStorage.getItem('jwt');
+
   async getBooks() {
-    const response = await fetch(`${this.apiBase}/api/books`);
+    const booksResponse = await axios.get(`${this.apiBase}/api/books`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.jwt}`,
+      },
+    });
 
-    const data = await response.json();
-
-    return data.map(this.transformCard);
+    return booksResponse.data.map(this.transformCard);
   }
 
   async getBook(id) {
-    const response = await fetch(`${this.apiBase}/api/books/${id}`);
-    const book = await response.json();
+    const bookResponse = await axios.get(`${this.apiBase}/api/books/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.jwt}`,
+      },
+    });
 
-    return Promise.resolve(this.transformCurrBook(book));
+    return this.transformCurrBook(bookResponse.data);
   }
 
   async getCategories() {
-    const response = await fetch(`${this.apiBase}/api/categories`);
+    const categoriesResponse = await axios.get(`${this.apiBase}/api/categories`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.jwt}`,
+      },
+    });
 
-    const data = await response.json();
-
-    return [{ name: 'Все книги', path: 'all' }, ...data];
+    return [{ name: 'Все книги', path: 'all' }, ...categoriesResponse.data];
   }
 
   async signUp(formData) {
@@ -56,6 +69,10 @@ export class Strapi {
     );
 
     return authResponse;
+  }
+
+  signOut() {
+    localStorage.removeItem('jwt');
   }
 
   transformCard = (book) => ({
