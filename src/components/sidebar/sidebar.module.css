@@ -24,6 +24,11 @@
   letter-spacing: 0.1px;
 }
 
+.item button {
+  background: transparent;
+  border: none;
+}
+
 .itemActive {
   max-width: 255px;
   display: block;
