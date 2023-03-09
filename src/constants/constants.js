@@ -13,9 +13,11 @@ export const ACTIONS = {
   setCategoriesError: 'SET_CATEGORIES_ERROR',
   setBooksError: 'SET_BOOKS_ERROR',
   setCurrBookError: 'SET_CURR_BOOK_ERROR',
-  setFormData: 'SET_FORM_DATA',
+  setRegFormData: 'SET_REG_FORM_DATA',
+  setAuthFormData: 'SET_AUTH_FORM_DATA',
   setRegResponse: 'SET_REG_RESPONSE',
   setRegStatus: 'SET_REG_STATUS',
+  setAuthResponse: 'SET_AUTH_RESPONSE',
   setAuthStatus: 'SET_AUTH_STATUS',
 };
 
@@ -43,7 +45,15 @@ export const FAILED_FB = {
   errorText: 'Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз',
   link: {
     content: 'повторить',
-    path: '/signUp',
+    path: '/registration',
+  },
+};
+
+export const FAILED_LOGIN_FB = {
+  title: 'Вход не выполнен',
+  errorText: 'Что-то пошло не так. Попробуйте ещё раз',
+  link: {
+    content: 'повторить',
   },
 };
 

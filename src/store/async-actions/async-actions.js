@@ -1,5 +1,6 @@
 import { StrapiService } from 'services/strapi';
 import {
+  setAuthResponseAC,
   setAuthStatusAC,
   setBooksAC,
   setBooksErrorAC,
@@ -32,11 +33,11 @@ export const fetchSignIn = (data) => async (dispatch) => {
   try {
     const response = await StrapiService.signIn(data);
 
+    dispatch(setAuthResponseAC(response?.data?.user));
     localStorage.setItem('jwt', response.data?.jwt);
-
     dispatch(setAuthStatusAC(response.status));
   } catch (e) {
-    console.log(e);
+    dispatch(setAuthStatusAC(e.response.status));
   } finally {
     dispatch(setLoadingAC(false));
   }
@@ -44,7 +45,7 @@ export const fetchSignIn = (data) => async (dispatch) => {
 
 export const fetchCategories = () => async (dispatch) => {
   try {
-    const response = await StrapiService.getCategories();
+    const response = await StrapiService.getCategories(localStorage.getItem('jwt'));
 
     dispatch(setCategoriesAC(response));
   } catch (e) {
@@ -54,7 +55,7 @@ export const fetchCategories = () => async (dispatch) => {
 
 export const fetchBooks = () => async (dispatch) => {
   try {
-    const response = await StrapiService.getBooks();
+    const response = await StrapiService.getBooks(localStorage.getItem('jwt'));
 
     dispatch(setBooksAC(response));
   } catch (e) {
@@ -67,7 +68,7 @@ export const fetchBooks = () => async (dispatch) => {
 export const fetchBook = (id) => async (dispatch) => {
   dispatch(setLoadingAC(true));
   try {
-    const response = await StrapiService.getBook(id);
+    const response = await StrapiService.getBook(id, localStorage.getItem('jwt'));
 
     dispatch(setCurrBookAC(response));
   } catch (e) {

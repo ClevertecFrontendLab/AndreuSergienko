@@ -4,13 +4,13 @@ import InputMask from 'react-input-mask';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { fetchSignUp, setFormDataAC } from 'store';
+import { fetchSignUp, setFormDataAC, setRegFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
 
 export const SignUpFormFinal = () => {
   const dispatch = useDispatch();
-  const formData = useSelector((state) => state.form.data);
+  const regFormData = useSelector((state) => state.form.regData);
 
   const {
     register,
@@ -111,8 +111,8 @@ export const SignUpFormFinal = () => {
 
   const onSubmit = (data) => {
     if (!isDisabled && isTelValid && isEmailValid) {
-      dispatch(setFormDataAC(data));
-      dispatch(fetchSignUp({ ...formData, ...data }));
+      dispatch(setRegFormDataAC(data));
+      dispatch(fetchSignUp({ ...regFormData, ...data }));
     } else {
       setIsDisabled(true);
     }

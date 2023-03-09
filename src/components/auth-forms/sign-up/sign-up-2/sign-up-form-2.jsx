@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { setFormDataAC } from 'store';
+import { setRegFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
 
@@ -43,7 +43,7 @@ export const SignUpFormSecond = ({ changeStep }) => {
 
   const checkIsFieldsValid = (data) => {
     if (!isDisabled && firstName && lastName) {
-      dispatch(setFormDataAC(data));
+      dispatch(setRegFormDataAC(data));
       changeStep();
     } else {
       setIsDisabled(true);

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IconEyeClose, IconEyeOpen, IconOkey } from 'assets/images/auth';
 import classNames from 'classnames/bind';
-import { setFormDataAC } from 'store';
+import { setRegFormDataAC } from 'store';
 
 import styles from '../sign-up-form.module.css';
 
@@ -264,7 +264,7 @@ export const SignUpFormFirst = ({ changeStep }) => {
   const checkIsFieldsValid = (data) => {
     if (isLoginValid && isPasswordValid && !isDisabled && watch('username') && watch('password')) {
       changeStep();
-      dispatch(setFormDataAC(data));
+      dispatch(setRegFormDataAC(data));
     } else {
       if (!watch('password')) onBlurPassword('');
       if (!watch('username')) onBlurLogin('');

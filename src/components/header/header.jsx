@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logo, user } from 'assets/images/header';
 import classNames from 'classnames/bind';
 import { StrapiService } from 'services/strapi';
-import { setAuthStatusAC, setJWTAC, setUserAC, toggleMenuAC } from 'store';
+import { setAuthStatusAC, toggleMenuAC } from 'store';
 
 import styles from './header.module.css';
 
