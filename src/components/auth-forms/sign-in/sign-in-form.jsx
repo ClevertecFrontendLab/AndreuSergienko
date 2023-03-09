@@ -1,16 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { fetchSignIn } from 'store';
+import { IconEyeClose, IconEyeOpen } from 'assets/images/auth';
+import classNames from 'classnames/bind';
+import { fetchSignIn, setAuthFormDataAC } from 'store';
 
 import styles from './sign-in-form.module.css';
 
 export const SignInForm = () => {
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, getValues } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const formStyles = {
+    input: styles.input,
+    inputError: styles.inputError,
+  };
+
+  const cx = classNames.bind(formStyles);
 
   useEffect(() => {
     if (authStatus === 200) {
@@ -19,6 +29,7 @@ export const SignInForm = () => {
   }, [authStatus, navigate]);
 
   const onSubmit = (data) => {
+    dispatch(setAuthFormDataAC(data));
     dispatch(fetchSignIn(data));
   };
 
@@ -29,7 +40,7 @@ export const SignInForm = () => {
         <div className={styles.field}>
           <input
             {...register('identifier')}
-            className={styles.input}
+            className={cx('input', { inputError: authStatus === 400 })}
             name='identifier'
             type='text'
             placeholder='Логин'
@@ -40,14 +51,28 @@ export const SignInForm = () => {
         <div className={styles.field}>
           <input
             {...register('password')}
-            className={styles.input}
-            type='password'
+            className={cx('input', { inputError: authStatus === 400 })}
+            type={isPasswordVisible ? 'text' : 'password'}
             name='password'
             placeholder='Пароль'
           />
-          {/* {input.tip ? <span className={styles.inputTip}>{input.tip}</span> : null} */}
+
+          <button className={styles.iconEye} type='button' onClick={() => setIsPasswordVisible(!isPasswordVisible)}>
+            {isPasswordVisible ? IconEyeOpen : IconEyeClose}
+          </button>
         </div>
       </div>
+
+      {authStatus === 400 ? (
+        <div className={styles.failedBlock}>
+          <span className={styles.failedTip}>Неверный логин или пароль!</span>
+          <Link className={styles.failedTip}>Восстановить?</Link>
+        </div>
+      ) : (
+        <div className={styles.defaultTip}>
+          <Link to='/forgot-password'>Забыли логин или пароль?</Link>
+        </div>
+      )}
 
       <button type='submit' className={styles.signInBtn}>
         войти

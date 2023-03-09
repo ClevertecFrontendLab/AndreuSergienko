@@ -25,6 +25,7 @@
 
 .field {
    min-height: 76px;
+   position: relative;
 }
 
 .input {
@@ -35,6 +36,11 @@
    border: none;
    outline: none;
    padding-left: 12px;
+   border-bottom: 1px solid #BFC4C9;
+}
+
+.input.inputError {
+   border-bottom: 1px solid #F42C4F;
 }
 
 .inputTip {
@@ -45,6 +51,34 @@
    line-height: 16px;
    letter-spacing: 0.2px;
    color: #A7A7A7;
+}
+
+.failedBlock {
+   margin-left: 12px;
+   display: inline-flex;
+   flex-direction: column;
+   gap: 4px;
+}
+
+.defaultTip {
+   margin-left: 12px;
+   font-weight: 500;
+   font-size: 12px;
+   line-height: 16px;
+   letter-spacing: 0.2px;
+   color: #A7A7A7;
+}
+
+.failedTip {
+   font-weight: 500;
+   font-size: 12px;
+   line-height: 16px;
+   letter-spacing: 0.2px;
+   color: #F42C4F;
+}
+
+a.failedTip {
+   color: #363636;
 }
 
 .signInBtn {
@@ -63,6 +97,18 @@
    letter-spacing: 0.2px;
    text-transform: uppercase;
    color: #FFFFFF;
+   cursor: pointer;
+}
+
+.iconEye {
+   position: absolute;
+   top: 16px;
+   right: 16px;
+   background-color: transparent;
+   width: 24px;
+   height: 24px;
+   border: none;
+   outline: none;
    cursor: pointer;
 }
 
