@@ -4,35 +4,33 @@ import axios from 'axios';
 export class Strapi {
   apiBase = 'https://strapi.cleverland.by';
 
-  jwt = localStorage.getItem('jwt');
-
-  async getBooks() {
+  async getBooks(jwt) {
     const booksResponse = await axios.get(`${this.apiBase}/api/books`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.jwt}`,
+        Authorization: `Bearer ${jwt}`,
       },
     });
 
     return booksResponse.data.map(this.transformCard);
   }
 
-  async getBook(id) {
+  async getBook(id, jwt) {
     const bookResponse = await axios.get(`${this.apiBase}/api/books/${id}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.jwt}`,
+        Authorization: `Bearer ${jwt}`,
       },
     });
 
     return this.transformCurrBook(bookResponse.data);
   }
 
-  async getCategories() {
+  async getCategories(jwt) {
     const categoriesResponse = await axios.get(`${this.apiBase}/api/categories`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.jwt}`,
+        Authorization: `Bearer ${jwt}`,
       },
     });
 
