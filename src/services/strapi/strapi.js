@@ -73,6 +73,38 @@ export class Strapi {
     localStorage.removeItem('jwt');
   }
 
+  async forgotPassword(email) {
+    const forgotPasswordResponse = await axios.post(
+      `${this.apiBase}/api/auth/forgot-password`,
+      {
+        ...email,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    return forgotPasswordResponse;
+  }
+
+  async resetPassword(data) {
+    const resetPasswordResponse = await axios.post(
+      `${this.apiBase}/api/auth/reset-password`,
+      {
+        ...data,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    return resetPasswordResponse;
+  }
+
   transformCard = (book) => ({
     ...book,
     image: book.image?.url ? this.getImage(book.image.url) : null,

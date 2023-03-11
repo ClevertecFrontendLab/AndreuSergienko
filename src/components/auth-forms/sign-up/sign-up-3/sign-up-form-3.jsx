@@ -80,33 +80,39 @@ export const SignUpFormFinal = () => {
 
   const validEmail = (value) => {
     if (!value || !value.length) {
-      return '';
+      return <span data-test-id='hint'>&nbsp;</span>;
     }
 
     if (!value.match(/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/)) {
       return (
-        <p className={styles.inputTip} style={{ color: '#F42C4F' }}>
+        <p className={styles.inputTip} style={{ color: '#F42C4F' }} data-test-id='hint'>
           Введите корректный e-mail
         </p>
       );
     }
 
-    return '';
+    return <span data-test-id='hint'>&nbsp;</span>;
   };
   const validTel = (value) => {
     if (!value || !value.length) {
-      <p className={styles.inputTip}>В формате +375 (xx) xxx-xx-xx</p>;
+      <p className={styles.inputTip} data-test-id='hint'>
+        В формате +375 (xx) xxx-xx-xx
+      </p>;
     }
 
     if (value?.includes('_')) {
       return (
-        <p className={styles.inputTip} style={{ color: '#F42C4F' }}>
+        <p className={styles.inputTip} style={{ color: '#F42C4F' }} data-test-id='hint'>
           В формате +375 (xx) xxx-xx-xx
         </p>
       );
     }
 
-    return <p className={styles.inputTip}>В формате +375 (xx) xxx-xx-xx</p>;
+    return (
+      <p className={styles.inputTip} data-test-id='hint'>
+        В формате +375 (xx) xxx-xx-xx
+      </p>
+    );
   };
 
   const onSubmit = (data) => {
@@ -138,6 +144,7 @@ export const SignUpFormFinal = () => {
             })}
             onFocus={(e) => onTelFocus(e.target.value)}
             value={tel}
+            name='phone'
             className={cx('input', { placeholderActive: isTelPlaceholder })}
             type='tel'
             mask='+375(99)999-99-99'
@@ -156,6 +163,7 @@ export const SignUpFormFinal = () => {
             })}
             onFocus={onEmailFocus}
             value={email}
+            name='email'
             className={cx('input', { placeholderActive: isEmailPlaceholder })}
             type='email'
             placeholder='E-mail'

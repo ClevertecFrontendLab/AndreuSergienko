@@ -60,6 +60,7 @@ export const Sidebar = () => {
       .map((item, i) => (i === 0 ? null : item));
 
   const handleSignOut = () => {
+    dispatch(toggleMenuAC(false));
     StrapiService.signOut();
     dispatch(setAuthStatusAC(''));
     navigate('/auth');
@@ -207,7 +208,7 @@ export const Sidebar = () => {
           </NavLink>
         </li>
         <li className={styles.item}>
-          <button type='button' onClick={handleSignOut}>
+          <button type='button' onClick={handleSignOut} data-test-id='exit-button'>
             Выход
           </button>
         </li>

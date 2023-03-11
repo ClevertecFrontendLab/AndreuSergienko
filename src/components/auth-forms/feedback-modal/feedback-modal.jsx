@@ -24,7 +24,7 @@ export const FeedbackModal = ({ title, errorText, link }) => {
   };
 
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} data-test-id='status-block'>
       <h4 className={styles.title}>{title}</h4>
       <p className={styles.errorText}>{errorText}</p>
       <button type='button' className={styles.button} onClick={handleClick}>

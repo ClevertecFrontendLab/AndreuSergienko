@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout, LayoutMainPage, Preloader, SignInForm, SignUpForm } from 'components';
-import { AuthPage, BookPage, MainPage, TermsPage } from 'pages';
+import { AuthPage, BookPage, ForgotPasswordPage, MainPage, TermsPage } from 'pages';
 
 import './app.css';
 
@@ -21,6 +21,7 @@ export const App = () => (
         <Route path='/' element={<Navigate to='/auth' />} />
         <Route path='/auth' element={<SignInForm />} />
         <Route path='/registration' element={<SignUpForm />} />
+        <Route path='/forgot-pass' element={<ForgotPasswordPage />} />
       </Route>
     </Routes>
   </div>

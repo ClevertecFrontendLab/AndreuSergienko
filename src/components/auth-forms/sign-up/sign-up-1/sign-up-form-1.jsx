@@ -66,8 +66,8 @@ export const SignUpFormFirst = ({ changeStep }) => {
   const validLogin = (value) => {
     if (!value || !value.length) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip}>
-          Используйте для логина латинский алфавит и цифры
+        <p ref={refTipLogin} className={styles.inputTip} data-test-id='hint'>
+          <span>Используйте для логина латинский алфавит и цифры</span>
         </p>
       );
     }
@@ -78,66 +78,80 @@ export const SignUpFormFirst = ({ changeStep }) => {
 
     if (!enLetter && number && ruLetter) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip}>
+        <p ref={refTipLogin} className={styles.inputTip} data-test-id='hint'>
           Используйте для логина
-          <mark style={{ color: '#F42C4F', background: 'none' }}> латинский алфавит</mark> и цифры
+          <span>
+            <mark style={{ color: '#F42C4F', background: 'none' }}> латинский алфавит</mark>
+          </span>
+          и цифры
         </p>
       );
     }
 
     if (!enLetter && !number && ruLetter) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip} style={{ color: '#F42C4F' }}>
-          Используйте для логина латинский алфавит и цифры
+        <p ref={refTipLogin} className={styles.inputTip} style={{ color: '#F42C4F' }} data-test-id='hint'>
+          <span>Используйте для логина латинский алфавит и цифры</span>
         </p>
       );
     }
 
     if (enLetter && !number && ruLetter) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip} style={{ color: '#F42C4F' }}>
-          Используйте для логина латинский алфавит и цифры
+        <p ref={refTipLogin} className={styles.inputTip} style={{ color: '#F42C4F' }} data-test-id='hint'>
+          <span>Используйте для логина латинский алфавит и цифры</span>
         </p>
       );
     }
 
     if (enLetter && number && ruLetter) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip}>
-          Используйте для логина <mark style={{ color: '#F42C4F', background: 'none' }}> латинский алфавит</mark> и
-          цифры
+        <p ref={refTipLogin} className={styles.inputTip} data-test-id='hint'>
+          Используйте для логина
+          <mark style={{ color: '#F42C4F', background: 'none' }}>
+            <span>латинский алфавит</span>
+          </mark>
+          и цифры
         </p>
       );
     }
 
     if (enLetter && number && !ruLetter) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip}>
-          Используйте для логина латинский алфавит и цифры
+        <p ref={refTipLogin} className={styles.inputTip} data-test-id='hint'>
+          <span>Используйте для логина латинский алфавит и цифры</span>
         </p>
       );
     }
 
     if (enLetter && !number && !ruLetter) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip}>
-          Используйте для логина латинский алфавит и<mark style={{ color: '#F42C4F', background: 'none' }}> цифры</mark>
+        <p ref={refTipLogin} className={styles.inputTip} data-test-id='hint'>
+          Используйте для логина латинский алфавит и
+          <mark style={{ color: '#F42C4F', background: 'none' }}>
+            <span>цифры</span>
+          </mark>
         </p>
       );
     }
 
     if (!enLetter && number && !ruLetter) {
       return (
-        <p ref={refTipLogin} className={styles.inputTip}>
-          Используйте для логина <mark style={{ color: '#F42C4F', background: 'none' }}> латинский алфавит</mark> и
-          цифры
+        <p ref={refTipLogin} className={styles.inputTip} data-test-id='hint'>
+          Используйте для логина
+          <mark style={{ color: '#F42C4F', background: 'none' }}>
+            <span>латинский алфавит</span>
+          </mark>
+          и цифры
         </p>
       );
     }
 
     return (
-      <p ref={refTipLogin} className={styles.inputTip}>
-        <mark style={{ color: '#F42C4F', background: 'none' }}>Используйте для логина латинский алфавит и цифры</mark>
+      <p ref={refTipLogin} className={styles.inputTip} data-test-id='hint'>
+        <mark style={{ color: '#F42C4F', background: 'none' }}>
+          <span>Используйте для логина латинский алфавит и цифры</span>
+        </mark>
       </p>
     );
   };
@@ -146,8 +160,8 @@ export const SignUpFormFirst = ({ changeStep }) => {
   const validPassword = (value) => {
     if (!value || !value.length) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
-          Пароль не менее 8 символов, с заглавной буквой и цифрой
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
+          <span>Пароль не менее 8 символов, с заглавной буквой и цифрой</span>
         </p>
       );
     }
@@ -158,42 +172,55 @@ export const SignUpFormFirst = ({ changeStep }) => {
 
     if (number && !passwordLength && upperLetter) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
-          Пароль <mark style={{ color: '#F42C4F', background: 'none' }}> не менее 8 символов</mark>, с заглавной буквой
-          и цифрой
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
+          Пароль
+          <mark style={{ color: '#F42C4F', background: 'none' }}>
+            <span>не менее 8 символов</span>
+          </mark>
+          , с заглавной буквой и цифрой
         </p>
       );
     }
 
     if (number && passwordLength && !upperLetter) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
-          Пароль не менее 8 символов,<mark style={{ color: '#F42C4F', background: 'none' }}> с заглавной буквой </mark>и
-          цифрой
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
+          Пароль не менее 8 символов,
+          <mark style={{ color: '#F42C4F', background: 'none' }}>
+            <span>с заглавной буквой</span>
+          </mark>
+          и цифрой
         </p>
       );
     }
 
     if (number && passwordLength && upperLetter) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
-          Пароль не менее 8 символов, с заглавной буквой и цифрой
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
+          <span>Пароль не менее 8 символов, с заглавной буквой и цифрой</span>
         </p>
       );
     }
 
     if (number && !passwordLength && !upperLetter) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
-          Пароль <mark style={{ color: '#F42C4F', background: 'none' }}> не менее 8 символов</mark>,
-          <mark style={{ color: '#F42C4F', background: 'none' }}> с заглавной буквой </mark>и цифрой
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
+          Пароль
+          <mark style={{ color: '#F42C4F', background: 'none' }}>
+            <span>не менее 8 символов</span>
+          </mark>
+          ,
+          <mark style={{ color: '#F42C4F', background: 'none' }}>
+            <span>с заглавной буквой</span>
+          </mark>
+          и цифрой
         </p>
       );
     }
 
     if (!number && passwordLength && upperLetter) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
           Пароль не менее 8 символов, с заглавной буквой и
           <mark style={{ color: '#F42C4F', background: 'none' }}> цифрой</mark>
         </p>
@@ -202,7 +229,7 @@ export const SignUpFormFirst = ({ changeStep }) => {
 
     if (!number && passwordLength && !upperLetter) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
           Пароль не менее 8 символов,<mark style={{ color: '#F42C4F', background: 'none' }}> с заглавной буквой </mark>и
           <mark style={{ color: '#F42C4F', background: 'none' }}> цифрой</mark>
         </p>
@@ -211,7 +238,7 @@ export const SignUpFormFirst = ({ changeStep }) => {
 
     if (!number && !passwordLength && upperLetter) {
       return (
-        <p className={styles.inputTip} ref={refTipPassword}>
+        <p className={styles.inputTip} ref={refTipPassword} data-test-id='hint'>
           Пароль<mark style={{ color: '#F42C4F', background: 'none' }}> не менее 8 символов </mark>, с заглавной буквой
           и<mark style={{ color: '#F42C4F', background: 'none' }}> цифрой</mark>
         </p>
@@ -219,7 +246,7 @@ export const SignUpFormFirst = ({ changeStep }) => {
     }
 
     return (
-      <p className={styles.inputTip} ref={refTipPassword} style={{ color: '#F42C4F' }}>
+      <p className={styles.inputTip} ref={refTipPassword} style={{ color: '#F42C4F' }} data-test-id='hint'>
         Пароль не менее 8 символов, с заглавной буквой и цифрой
       </p>
     );
@@ -283,7 +310,7 @@ export const SignUpFormFirst = ({ changeStep }) => {
   // };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} data-test-id='register-form'>
       <h4 className={styles.formTitle}>Регистрация</h4>
       <div className={styles.steps}>
         <span>1</span> шаг из <span>3</span>
@@ -325,9 +352,15 @@ export const SignUpFormFirst = ({ changeStep }) => {
           />
           <span className={cx('focusedPlaceholder', { placeholderActive: isPasswordPlaceholder })}>Пароль</span>
 
-          <span className={cx('iconSuccess', { iconSuccessActive: check })}>{IconOkey}</span>
+          <span className={cx('iconSuccess', { iconSuccessActive: check })} data-teset-id='checkmark'>
+            {IconOkey}
+          </span>
           <button className={styles.iconEye} type='button' onClick={() => setIsPasswordVisible(!isPasswordVisible)}>
-            {isPasswordVisible ? IconEyeOpen : IconEyeClose}
+            {isPasswordVisible ? (
+              <span data-test-id='eye-closed'>{IconEyeClose}</span>
+            ) : (
+              <span data-test-id='eye-opened'>{IconEyeOpen}</span>
+            )}
           </button>
 
           {errors?.password ? validPassword(password) : validPassword(password)}

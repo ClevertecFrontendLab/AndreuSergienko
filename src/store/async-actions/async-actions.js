@@ -12,6 +12,7 @@ import {
   setRegResponseAC,
   setRegStatusAC,
 } from 'store';
+import { setForgotPasswordStatusAC, setResetPasswordStatusAC } from 'store/reducers/forgot-password-reducer';
 
 export const fetchSignUp = (data) => async (dispatch) => {
   dispatch(setLoadingAC(true));
@@ -38,6 +39,35 @@ export const fetchSignIn = (data) => async (dispatch) => {
     dispatch(setAuthStatusAC(response.status));
   } catch (e) {
     dispatch(setAuthStatusAC(e.response.status));
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
+
+export const fetchForgotPassword = (data) => async (dispatch) => {
+  dispatch(setLoadingAC(true));
+  try {
+    const response = await StrapiService.forgotPassword(data);
+
+    dispatch(setForgotPasswordStatusAC(response.data?.ok));
+  } catch (e) {
+    console.log(e);
+    // dispatch(setAuthStatusAC(e.response.status));
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
+
+export const fetchResetPassword = (data) => async (dispatch) => {
+  dispatch(setLoadingAC(true));
+  try {
+    const response = await StrapiService.resetPassword(data);
+
+    console.log(response.status);
+    dispatch(setResetPasswordStatusAC(response.status));
+  } catch (e) {
+    console.log(e);
+    // dispatch(setAuthStatusAC(e.response.status));
   } finally {
     dispatch(setLoadingAC(false));
   }

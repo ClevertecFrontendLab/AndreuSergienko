@@ -18,6 +18,7 @@ import {
   searchReducer,
   sortReducer,
 } from './reducers';
+import { forgotPasswordReducer } from './reducers/forgot-password-reducer';
 
 const reducers = combineReducers({
   menu: menuReducer,
@@ -34,6 +35,7 @@ const reducers = combineReducers({
   form: formReducer,
   registration: registrationReducer,
   auth: authReducer,
+  forgotPassword: forgotPasswordReducer,
 });
 
 export const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));

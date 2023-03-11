@@ -19,6 +19,8 @@ export const ACTIONS = {
   setRegStatus: 'SET_REG_STATUS',
   setAuthResponse: 'SET_AUTH_RESPONSE',
   setAuthStatus: 'SET_AUTH_STATUS',
+  setForgotPasswordStatus: 'SET_FORGOT_PASSWORD_STATUS',
+  setResetPasswordStatus: 'SET_RESET_PASSWORD_STATUS',
 };
 
 export const SUCCESS_FB = {
@@ -60,4 +62,18 @@ export const FAILED_LOGIN_FB = {
 export const ERRORS = {
   uniques: 'ApplicationError',
   nonValidate: 'ValidateError',
+};
+
+export const MAIL_SENT_FB = {
+  title: 'Письмо выслано',
+  errorText: 'Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля',
+};
+
+export const NEW_PASSWORD_FB = {
+  title: 'Новые данные сохранены',
+  errorText: 'Зайдите в личный кабинет, используя свои логин и новый пароль',
+  link: {
+    content: 'вход',
+    path: '/auth',
+  },
 };

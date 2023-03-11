@@ -106,7 +106,7 @@ export const SignUpFormSecond = ({ changeStep }) => {
           <span className={cx('focusedPlaceholder', { placeholderActive: isFirstNamePlaceholder })}>Имя</span>
 
           {errors?.firstName && (
-            <span style={{ color: '#f42c4f' }} className={styles.inputTip}>
+            <span style={{ color: '#f42c4f' }} className={styles.inputTip} data-test-id='hint'>
               Поле не должно быть пустым
             </span>
           )}
@@ -128,7 +128,7 @@ export const SignUpFormSecond = ({ changeStep }) => {
           <span className={cx('focusedPlaceholder', { placeholderActive: isLastNamePlaceholder })}>Фамилия</span>
 
           {errors?.lastName && (
-            <span style={{ color: '#f42c4f' }} className={styles.inputTip}>
+            <span style={{ color: '#f42c4f' }} className={styles.inputTip} data-test-id='hint'>
               Поле не должно быть пустым
             </span>
           )}
